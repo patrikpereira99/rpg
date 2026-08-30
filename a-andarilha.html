@@ -1,0 +1,2278 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#17130F">
+<title>A Andarilha — Guia de Mesa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Spectral:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --noite:#17130F; --vagao:#221C16; --brasa:#2E251C;
+  --osso:#EAE1D2; --poeira:#B3A288; --ferrugem:#B5562F;
+  --lampiao:#D9A441; --linha:#3D3227; --cinza:#7C7A78;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--noite);color:var(--osso);font-family:'Spectral',Georgia,serif;
+  font-size:17px;line-height:1.6;padding-bottom:70px;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:radial-gradient(circle at 15% 20%,rgba(217,164,65,.06),transparent 55%),
+                   radial-gradient(circle at 85% 75%,rgba(181,86,47,.05),transparent 55%)}
+.wrap{position:relative;z-index:1;max-width:780px;margin:0 auto;padding:0 16px}
+
+header{position:sticky;top:0;z-index:20;background:rgba(23,19,15,.96);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--linha);padding-top:env(safe-area-inset-top)}
+.marca{padding:13px 16px 9px;max-width:780px;margin:0 auto}
+.marca h1{font-family:'IM Fell English',Georgia,serif;font-size:1.5rem;letter-spacing:.02em;line-height:1.25;font-weight:400}
+.marca p{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--poeira);margin-top:4px}
+nav{display:flex;gap:6px;overflow-x:auto;padding:0 16px 10px;max-width:780px;margin:0 auto;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.1em;
+  text-transform:uppercase;background:transparent;color:var(--poeira);border:1px solid var(--linha);
+  border-radius:2px;padding:9px 12px;cursor:pointer;transition:background .15s,color .15s}
+.tab[aria-selected="true"]{background:var(--osso);color:var(--noite);border-color:var(--osso)}
+.tab:focus-visible{outline:2px solid var(--lampiao);outline-offset:2px}
+
+.painel{display:none;padding-top:22px}
+.painel.ativo{display:block;animation:entra .25s ease-out}
+@keyframes entra{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+h2{font-family:'IM Fell English',Georgia,serif;font-weight:400;font-size:1.62rem;margin-bottom:6px}
+.subtitulo{font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--poeira);margin-bottom:20px}
+h3{font-family:'IM Fell English',Georgia,serif;font-weight:400;font-size:1.24rem;margin:24px 0 8px}
+h4{font-family:'IM Fell English',Georgia,serif;font-weight:400;font-size:1.1rem;margin:16px 0 6px;color:var(--lampiao)}
+p+p{margin-top:10px}
+strong{color:#fff;font-weight:600}
+em{color:var(--lampiao);font-style:italic}
+ul,ol{margin:10px 0 10px 20px}
+li{margin-bottom:7px}
+.dica{border-left:2px solid var(--poeira);padding-left:13px;margin:14px 0;color:var(--poeira);font-size:.94rem}
+.alerta{border-left:2px solid var(--ferrugem);padding-left:13px;margin:14px 0;color:#E6B7A4;font-size:.94rem}
+.spoiler{color:var(--ferrugem);font-weight:600}
+
+/* passo a passo */
+.bloco-passo{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--lampiao);border-bottom:1px solid var(--linha);
+  padding-bottom:7px;margin:30px 0 14px}
+.relogio{font-family:'IBM Plex Mono',monospace;font-size:.6rem;color:var(--poeira);letter-spacing:.1em;float:right}
+.passo{display:flex;gap:11px;padding:14px 15px;background:var(--vagao);border:1px solid var(--linha);
+  border-radius:3px;margin-bottom:10px;cursor:pointer;align-items:flex-start}
+.passo .n{font-family:'IBM Plex Mono',monospace;font-size:.72rem;font-weight:600;color:var(--lampiao);flex:0 0 26px;padding-top:3px}
+.passo .txt{flex:1;min-width:0}
+.passo .tit{font-family:'IM Fell English',Georgia,serif;font-size:1.08rem;line-height:1.25;display:block;margin-bottom:6px}
+.passo p{font-size:.94rem}
+.passo.feito{opacity:.4}
+.passo.feito .tit{text-decoration:line-through}
+.diga{border-left:3px solid var(--lampiao);background:var(--brasa);padding:11px 13px;margin:9px 0;
+  border-radius:0 3px 3px 0;font-style:italic;color:#F5EEE1;font-size:.96rem}
+.diga::before{content:"VOCÊ FALA";display:block;font-family:'IBM Plex Mono',monospace;font-style:normal;
+  font-size:.56rem;letter-spacing:.18em;color:var(--lampiao);margin-bottom:6px}
+.faz{border-left:3px solid var(--poeira);padding:9px 0 9px 13px;margin:9px 0;color:var(--poeira);font-size:.92rem}
+.faz::before{content:"VOCÊ FAZ";display:block;font-family:'IBM Plex Mono',monospace;
+  font-size:.56rem;letter-spacing:.18em;color:var(--poeira);margin-bottom:5px}
+.seresp{border-left:3px solid var(--ferrugem);padding:9px 0 9px 13px;margin:9px 0;font-size:.92rem;color:#E6C4B4}
+.seresp::before{content:"SE PERGUNTAREM";display:block;font-family:'IBM Plex Mono',monospace;
+  font-size:.56rem;letter-spacing:.18em;color:var(--ferrugem);margin-bottom:5px}
+
+.rola{border-left:3px solid #6E9C6B;background:rgba(110,156,107,.08);padding:11px 13px;margin:9px 0;
+  border-radius:0 3px 3px 0;font-size:.93rem;color:#DCE8D8}
+.rola::before{content:"PEÇA UMA ROLAGEM";display:block;font-family:'IBM Plex Mono',monospace;
+  font-size:.56rem;letter-spacing:.18em;color:#8FBF8A;margin-bottom:6px}
+.rola b{color:#fff}
+.rola .cd{font-family:'IBM Plex Mono',monospace;color:#A8D3A2}
+
+.cardapio{border:1px solid var(--linha);border-radius:3px;overflow:hidden;margin:14px 0}
+.mitem{display:flex;align-items:flex-start;gap:12px;padding:13px 14px;border-bottom:1px solid var(--linha);cursor:pointer}
+.mitem:last-child{border-bottom:none}
+.mitem.sel{background:rgba(217,164,65,.12)}
+.mitem .mtxt{flex:1;min-width:0}
+.mitem .mnome{font-family:'IM Fell English',Georgia,serif;font-size:1.08rem;color:var(--lampiao);display:block}
+.mitem .mreal{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--poeira);display:block;margin:2px 0 5px}
+.mitem .mef{font-size:.9rem}
+.mitem .mpr{font-family:'IBM Plex Mono',monospace;font-size:.85rem;color:var(--lampiao);flex:0 0 auto;padding-top:3px}
+.conta{position:sticky;bottom:0;background:rgba(23,19,15,.97);border-top:1px solid var(--lampiao);
+  padding:13px 14px;display:flex;justify-content:space-between;align-items:center;
+  font-family:'IBM Plex Mono',monospace;font-size:.9rem}
+.conta b{color:var(--lampiao);font-size:1.1rem}
+.conta button{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;
+  background:transparent;color:var(--poeira);border:1px solid var(--linha);border-radius:2px;padding:8px 11px;cursor:pointer}
+
+.narr{background:var(--vagao);border:1px solid var(--linha);border-radius:3px;padding:14px 15px;margin-bottom:12px}
+.narr .ntit{font-family:'IM Fell English',Georgia,serif;font-size:1.1rem;color:var(--lampiao);display:block;margin-bottom:3px}
+.narr .nonde{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--poeira);display:block;margin-bottom:9px}
+.narr .ntxt{font-style:italic;color:#F5EEE1;font-size:.95rem;white-space:pre-line}
+.narr .nbtn{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;
+  background:transparent;color:var(--lampiao);border:1px solid var(--lampiao);border-radius:2px;
+  padding:9px 13px;margin-top:11px;cursor:pointer}
+.narr .nbtn:active{background:rgba(217,164,65,.15)}
+.narr .nbtn[disabled]{opacity:.45}
+.chave{background:var(--brasa);border:1px solid var(--lampiao);border-radius:3px;padding:16px;margin-bottom:18px}
+.chave input{width:100%;background:var(--noite);border:1px solid var(--linha);color:var(--osso);
+  font-family:'IBM Plex Mono',monospace;font-size:.82rem;padding:11px;border-radius:2px;margin-bottom:9px}
+.chave label{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--lampiao);display:block;margin-bottom:5px}
+#estado-voz{font-family:'IBM Plex Mono',monospace;font-size:.64rem;color:var(--poeira);
+  display:block;margin-top:10px;min-height:16px}
+
+.sfx{display:flex;align-items:center;gap:11px;padding:12px 13px;background:var(--vagao);
+  border:1px solid var(--linha);border-radius:3px;margin-bottom:8px}
+.sfx .stxt{flex:1;min-width:0}
+.sfx .snome{font-family:'IM Fell English',Georgia,serif;font-size:1.05rem;color:var(--lampiao);display:block}
+.sfx .squando{font-size:.86rem;color:var(--poeira);display:block;margin-top:2px}
+.sfx .sbtn{flex:0 0 auto;font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.08em;
+  text-transform:uppercase;background:transparent;color:var(--lampiao);border:1px solid var(--lampiao);
+  border-radius:2px;padding:10px 12px;cursor:pointer;min-width:78px}
+.sfx .sbtn[disabled]{opacity:.45}
+.sfx.pronto{border-color:var(--lampiao)}
+#prog-sfx{font-family:'IBM Plex Mono',monospace;font-size:.64rem;color:var(--poeira);
+  display:block;margin-top:10px;min-height:16px}
+
+.bnarr{font-family:'IBM Plex Mono',monospace;font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;
+  background:transparent;color:var(--lampiao);border:1px solid var(--linha);border-radius:2px;
+  padding:5px 9px;margin-top:9px;cursor:pointer;display:block}
+.bnarr:active{background:rgba(217,164,65,.15)}
+.bnarr[disabled]{opacity:.45}
+
+.leitura{background:var(--brasa);border-left:3px solid var(--lampiao);padding:13px 15px;margin:12px 0;
+  border-radius:0 3px 3px 0;font-style:italic;color:#F5EEE1}
+.leitura::before{content:"LER EM VOZ ALTA";display:block;font-family:'IBM Plex Mono',monospace;
+  font-style:normal;font-size:.58rem;letter-spacing:.18em;color:var(--lampiao);margin-bottom:7px}
+.leitura p+p{margin-top:9px}
+
+.bloco{background:var(--vagao);border:1px solid var(--linha);border-radius:3px;margin-bottom:12px}
+.bloco>summary{list-style:none;cursor:pointer;padding:14px 16px;
+  font-family:'IM Fell English',Georgia,serif;font-size:1.16rem;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.bloco>summary::-webkit-details-marker{display:none}
+.bloco>summary::after{content:"+";font-family:'IBM Plex Mono',monospace;color:var(--lampiao)}
+.bloco[open]>summary::after{content:"–"}
+.bloco .corpo{padding:0 16px 16px}
+.rotulo{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--lampiao);display:block;margin-bottom:3px}
+
+.ficha{border:1px solid var(--ferrugem);border-radius:3px;padding:13px 15px;margin:14px 0;background:rgba(181,86,47,.07)}
+.ficha h4{color:#E8A88E;margin:0 0 3px}
+.ficha .papel{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--poeira);margin-bottom:9px}
+.numeros{font-family:'IBM Plex Mono',monospace;font-size:.8rem;margin-bottom:9px;line-height:2}
+.numeros span{background:var(--noite);border:1px solid var(--linha);padding:3px 7px;border-radius:2px;margin-right:5px;white-space:nowrap}
+.ficha p{font-size:.93rem}
+.ficha p+p{margin-top:7px}
+.como{color:var(--lampiao);font-style:italic;font-size:.92rem}
+
+.pj{border:1px solid var(--lampiao);border-radius:3px;margin-bottom:14px;background:rgba(217,164,65,.05)}
+.pj>summary{list-style:none;cursor:pointer;padding:14px 16px}
+.pj>summary::-webkit-details-marker{display:none}
+.pj .jogador{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--lampiao);display:block;margin-bottom:2px}
+.pj .pjnome{font-family:'IM Fell English',Georgia,serif;font-size:1.24rem;line-height:1.2;display:block}
+.pj .classe{font-family:'IBM Plex Mono',monospace;font-size:.66rem;color:var(--poeira);display:block;margin-top:4px}
+.pj .corpo{padding:0 16px 16px;border-top:1px solid var(--linha);padding-top:14px}
+.pj h5{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--lampiao);margin:16px 0 6px;font-weight:400}
+.pj h5:first-of-type{margin-top:0}
+
+.agenda{background:var(--vagao);border:1px solid var(--linha);border-radius:3px;padding:16px;margin-bottom:12px;cursor:pointer}
+.agenda .quem{font-family:'IM Fell English',Georgia,serif;font-size:1.24rem;color:var(--lampiao)}
+.agenda .cargo{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--poeira);margin:3px 0 10px}
+.agenda .conteudo{transition:filter .3s,opacity .3s}
+.agenda.lacrada .conteudo{filter:blur(6px);opacity:.5;user-select:none}
+.selo{display:none;font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.14em;color:var(--ferrugem);margin-top:11px}
+.agenda.lacrada .selo{display:block}
+.mecanica{font-family:'IBM Plex Mono',monospace;font-size:.76rem;color:var(--poeira);margin-top:9px;line-height:1.65}
+
+table{width:100%;border-collapse:collapse;font-size:.88rem;margin:12px 0}
+th{font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--poeira);text-align:left;padding:7px 6px;border-bottom:1px solid var(--linha);font-weight:400}
+td{padding:9px 6px;border-bottom:1px solid var(--linha);vertical-align:top}
+td.d{font-family:'IBM Plex Mono',monospace;color:var(--lampiao);white-space:nowrap;width:38px}
+td.pr{font-family:'IBM Plex Mono',monospace;white-space:nowrap;color:var(--lampiao)}
+
+.item{border-left:2px solid var(--linha);padding:11px 0 11px 13px;margin:12px 0}
+.item .nome{font-family:'IM Fell English',Georgia,serif;font-size:1.1rem;color:var(--lampiao)}
+.item .real{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--poeira);display:block;margin:2px 0 6px}
+.item p{font-size:.94rem}
+
+.som{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.1em;
+  text-transform:uppercase;background:transparent;color:var(--lampiao);border:1px solid var(--lampiao);
+  border-radius:2px;padding:7px 11px;margin:8px 0;text-decoration:none}
+.som:active{background:rgba(217,164,65,.15)}
+
+.sorteio{background:var(--vagao);border:1px solid var(--linha);border-radius:3px;padding:16px;margin-bottom:16px}
+.btn{font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--osso);color:var(--noite);border:none;border-radius:2px;padding:12px 16px;cursor:pointer;width:100%}
+.btn:active{background:var(--lampiao)}
+.btn.sec{background:transparent;color:var(--poeira);border:1px solid var(--linha)}
+.resultado{margin-top:13px;padding:13px;border:1px dashed var(--linha);border-radius:2px;min-height:50px;
+  display:flex;align-items:center;color:var(--poeira);font-size:.94rem}
+.resultado.tem{color:var(--osso);border-color:var(--lampiao);border-style:solid}
+.d20{font-family:'IBM Plex Mono',monospace;font-size:2.6rem;font-weight:600;color:var(--lampiao);line-height:1}
+
+.campos{display:flex;gap:6px;margin-bottom:10px}
+.campos input{flex:1;min-width:0;background:var(--noite);border:1px solid var(--linha);color:var(--osso);
+  font-family:'IBM Plex Mono',monospace;font-size:.85rem;padding:10px;border-radius:2px}
+.campos input.curto{flex:0 0 62px}
+.linha-comb{display:flex;align-items:center;gap:9px;padding:11px 12px;background:var(--brasa);
+  border:1px solid var(--linha);border-radius:2px;margin-bottom:6px}
+.linha-comb .ini{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--lampiao);
+  font-size:1rem;flex:0 0 30px;text-align:center}
+.linha-comb .nom{flex:1;font-size:.97rem;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.linha-comb .pv{font-family:'IBM Plex Mono',monospace;font-size:.85rem;color:var(--poeira)}
+.linha-comb input.dano{flex:0 0 52px;background:var(--noite);border:1px solid var(--linha);color:var(--osso);
+  font-family:'IBM Plex Mono',monospace;font-size:.8rem;padding:6px;border-radius:2px;text-align:center}
+.linha-comb .x{background:none;border:none;color:var(--poeira);font-size:1.1rem;cursor:pointer;padding:0 4px}
+.linha-comb.morto{opacity:.42}
+.linha-comb.morto .nom{text-decoration:line-through}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="marca">
+    <h1>A Andarilha</h1>
+    <p>Guia de mesa · Patrik · 5 jogadores · nível 5</p>
+  </div>
+  <div id="barra-salvo" style="max-width:780px;margin:0 auto;padding:0 16px 8px;
+    font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.1em;color:var(--poeira)">
+    <span id="txt-salvo">carregando…</span>
+    <button id="btn-reset" style="background:none;border:none;color:var(--ferrugem);
+      font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.1em;cursor:pointer;float:right">apagar tudo</button>
+  </div>
+  <nav role="tablist">
+    <button class="tab" role="tab" aria-selected="true" data-alvo="mundo">O Mundo</button>
+    <button class="tab" role="tab" aria-selected="false" data-alvo="cargos">Cargos</button>
+    <button class="tab" role="tab" aria-selected="false" data-alvo="agendas">Agendas</button>
+    <button class="tab" role="tab" aria-selected="false" data-alvo="grupo">O Grupo</button>
+    <button class="tab" role="tab" aria-selected="false" data-alvo="s1">Sessão 1</button>
+    <button class="tab" role="tab" aria-selected="false" data-alvo="s2">Sessão 2</button>
+    <button class="tab" role="tab" aria-selected="false" data-alvo="s3">Sessão 3</button>
+    <button class="tab" role="tab" aria-selected="false" data-alvo="adiante">Adiante</button>
+    <button class="tab" role="tab" aria-selected="false" data-alvo="npcs">NPCs</button>
+    <button class="tab" role="tab" aria-selected="false" data-alvo="trilha">Trilha</button>
+    <button class="tab" role="tab" aria-selected="false" data-alvo="narracao">Narração</button>
+    <button class="tab" role="tab" aria-selected="false" data-alvo="efeitos">Efeitos</button>
+    <button class="tab" role="tab" aria-selected="false" data-alvo="rolagens">Rolagens</button>
+    <button class="tab" role="tab" aria-selected="false" data-alvo="combate">Combate</button>
+    <button class="tab" role="tab" aria-selected="false" data-alvo="bestiario">Bestiário</button>
+    <button class="tab" role="tab" aria-selected="false" data-alvo="loja">Cantina</button>
+    <button class="tab" role="tab" aria-selected="false" data-alvo="improviso">Improviso</button>
+    <button class="tab" role="tab" aria-selected="false" data-alvo="mesa">Mesa</button>
+  </nav>
+</header>
+
+<div class="wrap">
+
+<!-- ================= MUNDO ================= -->
+<section class="painel ativo" id="mundo">
+  <h2>O Cinza e a estrada</h2>
+  <p class="subtitulo">Leia isto antes de tudo</p>
+
+  <div class="leitura">
+    <p>O mundo está sendo apagado de leste para oeste.</p>
+    <p>Não destruído — apagado. A terra que o Cinza atravessa deixa de ter existido. As estradas some do mapa enquanto o mapa ainda está na sua mão. E quem olha para trás por tempo demais perde memórias: primeiro os nomes, depois os rostos, depois o resto.</p>
+    <p>Faz três gerações que a humanidade caminha para o oeste. Ninguém sabe a história do mundo, porque o mundo está sendo comido pelo começo.</p>
+    <p>Vocês são a tripulação da Andarilha: quarenta vagões acorrentados, quatrocentas pessoas, uma cidade sobre rodas que nunca para mais de seis horas.</p>
+  </div>
+
+  <h3>As três regras da Andarilha</h3>
+  <ol>
+    <li><strong>Nunca parar mais de seis horas.</strong> Passou disso, o Cinza alcança.</li>
+    <li><strong>Nunca olhar para trás por mais de um minuto.</strong> Quem olha, esquece.</li>
+    <li><strong>Ninguém desce sozinho.</strong> Quem desce da caravana sempre desce em dupla.</li>
+  </ol>
+  <div class="dica">Essas três regras são o coração da campanha. Toda tensão sai daqui. Escreve num papel e deixa na mesa a sessão inteira.</div>
+
+  <h3>Como funciona o relógio</h3>
+  <p>Toda sessão, a Andarilha avança ou perde terreno. Você marca isso numa escala simples de <strong>Distância</strong>, de 10 a 0:</p>
+  <ul>
+    <li><strong>10 a 7 — Folgado.</strong> Dá pra parar, negociar, explorar ruínas.</li>
+    <li><strong>6 a 4 — Apertado.</strong> Cada parada custa. Descansos longos ficam difíceis.</li>
+    <li><strong>3 a 1 — No limite.</strong> O horizonte leste está cinza. Todo mundo vê.</li>
+    <li><strong>0 — O Cinza alcança.</strong> Cena de perda: um vagão, um NPC, uma memória.</li>
+  </ul>
+  <p>Começa em 8. Cada parada longa custa 1. Cada dia de viagem limpa devolve 1. Enrolar tem preço, e o preço é visível.</p>
+
+  <h3>A verdade por trás</h3>
+  <p class="spoiler">A Andarilha já fez esse caminho antes. Tem marcas de roda antigas embaixo dela, e a Memorista tem lembranças de lugares que ainda não passaram. O mundo é circular: o Cinza não está apagando o mundo, está apagando o que já foi percorrido, e o oeste é o leste de novo. Fugir para sempre é possível — desde que o mundo continue redondo.</p>
+  <p class="spoiler">Na Temporada 4 eles descobrem que existiu uma escolha na primeira volta: alguém parou a caravana de propósito. E deu certo por dezessete anos.</p>
+
+  <h3>Moeda</h3>
+  <p>Não se usa ouro. Usa-se <strong>prego</strong> — peças de metal retiradas da própria caravana. Dinheiro é literalmente pedaço da máquina que mantém todo mundo vivo, e por isso ninguém acumula sem culpa.</p>
+  <p><em>1 prego = uma refeição. 10 pregos = um dia de trabalho pago. 100 pregos = uma peça de reposição de verdade.</em></p>
+
+  <div class="sorteio">
+    <h3 style="margin-top:0">Distância</h3>
+    <div class="campos">
+      <input id="dist" type="number" inputmode="numeric" min="0" max="10" placeholder="8">
+      <button class="btn sec" id="dist-menos" style="flex:0 0 60px">−1</button>
+      <button class="btn sec" id="dist-mais" style="flex:0 0 60px">+1</button>
+    </div>
+    <div class="dica" style="margin-bottom:0">10 a 7 folgado · 6 a 4 apertado · 3 a 1 no limite · 0 o Cinza alcança. Fica salvo entre sessões.</div>
+  </div>
+
+  <h3>Trilha</h3>
+  <p>O som base fica tocando a sessão inteira, bem baixo. Os outros entram por cima só na cena certa.</p>
+  <table>
+    <tr><th>Momento</th><th>Faixa</th></tr>
+    <tr><td>Base · sempre</td><td>Dentro da Andarilha (botão abaixo)</td></tr>
+    <tr><td>Parada / vilarejo</td><td>buscar <em>Ghelfi Small Village Ambience</em></td></tr>
+    <tr><td>Tensão / o Cinza</td><td>buscar <em>Ghelfi Ominous Tunnel</em></td></tr>
+    <tr><td>Combate</td><td>buscar <em>Ghelfi Skirmish</em></td></tr>
+    <tr><td>Fogueira / conversa</td><td>buscar <em>Ghelfi Campfire Night</em></td></tr>
+    <tr><td>Cena pesada</td><td>silêncio — desliga tudo</td></tr>
+  </table>
+  <div class="dica">Corta o som base nas cenas em que alguém perde uma memória. A Andarilha ficar em silêncio de repente é o efeito mais barato e mais forte que você tem.</div>
+
+  <a class="som" href="https://www.youtube.com/watch?v=2EvgxEfK7-M" target="_blank" rel="noopener">▶ Som da caravana em marcha</a>
+</section>
+
+<!-- ================= CARGOS ================= -->
+<section class="painel" id="cargos">
+  <h2>Os cinco cargos</h2>
+  <p class="subtitulo">Um por jogador · cada um com poder próprio</p>
+
+  <div class="dica">O cargo é o que a pessoa <strong>faz</strong> na Andarilha. Cada um dá uma habilidade que só aquele jogador tem — é o que garante que ninguém fique calado numa mesa grande.</div>
+
+  <div class="alerta">Cozinheiro e Memorista <strong>viraram NPCs</strong>. O Cozinheiro é o Panela, que serve a Cantina; a Memorista é a Velha Corda. Os dois estão na aba NPCs, com os segredos deles.</div>
+
+  <details class="bloco" open><summary>Timoneiro · Thorgrim</summary><div class="corpo">
+    <p>Decide a rota. Comanda a caravana em movimento.</p>
+    <p><strong>Poder:</strong> uma vez por sessão, declara <em>"vira!"</em> — a Andarilha manobra. Todos em cima dela fazem resistência de Destreza CD 13 ou caem. Aliados escolhem passar automaticamente.</p>
+    <p><strong>Voto:</strong> em impasse do grupo, o voto dele desempata.</p>
+  </div></details>
+
+  <details class="bloco"><summary>Batedor · Zaira</summary><div class="corpo">
+    <p>Sai na frente, volta com informação.</p>
+    <p><strong>Poder:</strong> antes de cada sessão, faz uma <em>batida</em> — você conta uma coisa verdadeira sobre o que vem pela frente, em cena solo de 2 minutos só com ela.</p>
+    <p><strong>Custo:</strong> quem bate fica sozinho, e a regra 3 diz que ninguém desce sozinho. Ela quebra a regra toda vez.</p>
+  </div></details>
+
+  <details class="bloco"><summary>Mecânico · Luiz</summary><div class="corpo">
+    <p>Mantém a Andarilha andando.</p>
+    <p><strong>Poder:</strong> uma vez por sessão, <em>remenda</em>: cancela uma consequência mecânica que atingiu a caravana (eixo quebrado, vagão perdido, incêndio) gastando 20 pregos e uma cena.</p>
+    <p><strong>Diagnóstico:</strong> sempre sabe quanto tempo de vida uma peça ainda tem.</p>
+  </div></details>
+
+  <details class="bloco"><summary>Boticário · Irina</summary><div class="corpo">
+    <p>Cuida dos feridos e dos doentes da caravana.</p>
+    <p><strong>Poder:</strong> em descanso curto, cura um aliado em <em>1d8 + nível</em> PV extra, três vezes por dia.</p>
+    <p><strong>Leitura:</strong> ao examinar alguém, sabe se a pessoa está mentindo sobre a própria saúde.</p>
+  </div></details>
+
+  <details class="bloco"><summary>Contramestre · Silas</summary><div class="corpo">
+    <p>Cuida do cofre coletivo e negocia por todos.</p>
+    <p><strong>Poder:</strong> uma vez por parada, negocia — teste de Persuasão ou Enganação. Sucesso reduz o preço de tudo naquela parada em 25%.</p>
+    <p><strong>Cofre:</strong> ele decide como os pregos do grupo são gastos. A loja é do mestre; o dinheiro é dele.</p>
+  </div></details>
+
+  
+
+  
+</section>
+
+<!-- ================= AGENDAS ================= -->
+<section class="painel" id="agendas">
+  <h2>Agendas secretas</h2>
+  <p class="subtitulo">Cinco agendas · entregar em papel · toque para abrir</p>
+
+  <div class="alerta">Nenhuma agenda é traição. Todas são <strong>segredos guardados por medo</strong>, não sabotagem. Isso é essencial: mesa nenhuma aguenta jogador contra jogador.</div>
+
+  <div class="agenda lacrada">
+    <div class="quem">Thorgrim</div><div class="cargo">Timoneiro · a rota</div>
+    <div class="conteudo">
+      <p>A rota oficial leva a um porto que não existe mais. Você descobriu há duas semanas e não contou pra ninguém.</p>
+      <p class="mecanica">Você tem 6 semanas antes de alguém perceber. Se contar antes, o grupo te ajuda mas a caravana entra em pânico. Se esconder até o fim, é pior.</p>
+    </div><div class="selo">▸ Lacrado — toque para abrir</div>
+  </div>
+
+  <div class="agenda lacrada">
+    <div class="quem">Zaira</div><div class="cargo">Batedora · o Cinza</div>
+    <div class="conteudo">
+      <p>Você chegou a dez metros do Cinza e não perdeu nenhuma memória. Nenhuma.</p>
+      <p class="mecanica">Você não sabe por quê e tem medo de descobrir. Uma vez por sessão pode entrar no Cinza por até 1 minuto sem consequência — mas alguém pode ver você fazendo isso.</p>
+    </div><div class="selo">▸ Lacrado — toque para abrir</div>
+  </div>
+
+  <div class="agenda lacrada">
+    <div class="quem">Luiz</div><div class="cargo">Mecânico · o prazo</div>
+    <div class="conteudo">
+      <p>A Andarilha está morrendo. Você fez as contas três vezes: entre quatro e sete meses até o eixo-mestre ceder. Não tem peça de reposição no mundo, porque o mundo está sendo apagado.</p>
+      <p class="mecanica">Você é o único que sabe. Cada remendo que você faz compra tempo e gasta peça — e você sabe exatamente quanto restou.</p>
+    </div><div class="selo">▸ Lacrado — toque para abrir</div>
+  </div>
+
+  <div class="agenda lacrada">
+    <div class="quem">Irina</div><div class="cargo">Boticária · o paciente</div>
+    <div class="conteudo">
+      <p>Você está tratando alguém que devia ter morrido há três semanas. Os ferimentos não fecham, mas a pessoa não piora. E não dorme.</p>
+      <p class="mecanica">Você não sabe o que está mantendo essa pessoa viva. Ela pediu segredo, e você prometeu.</p>
+    </div><div class="selo">▸ Lacrado — toque para abrir</div>
+  </div>
+
+  <div class="agenda lacrada">
+    <div class="quem">Silas</div><div class="cargo">Contramestre · a dívida</div>
+    <div class="conteudo">
+      <p>Você deve 800 pregos para a caravana Rival. Foi assim que a Andarilha atravessou o inverno passado, e ninguém soube.</p>
+      <p class="mecanica">Eles vão cobrar na Temporada 3. E não querem pregos de volta — querem passagem, e um lugar dentro da Andarilha.</p>
+    </div><div class="selo">▸ Lacrado — toque para abrir</div>
+  </div>
+
+  
+
+  
+
+  <h3>Como as agendas se cruzam</h3>
+  <div class="dica"><strong>Isto é só seu:</strong> o paciente da Irina é o clandestino que o Panela alimenta escondido. É alguém que voltou do Cinza — por isso não morre e não dorme. E é a mesma coisa que protege a Zaira lá dentro. Duas agendas e um NPC apontam pro mesmo segredo, e ninguém sabe.</div>
+</section>
+
+<!-- ================= GRUPO ================= -->
+<section class="painel" id="grupo">
+  <h2>O grupo</h2>
+  <p class="subtitulo">Cinco personagens · todos nível 5</p>
+
+  <div class="alerta"><strong>Só a Gigi precisa subir.</strong> Thorgrim, Silas, Zaira e Luiz já estão no nível 5. A Irina ainda está no 1 — ela precisa chegar no 5 antes de domingo, o que significa escolher o <strong>Círculo druídico</strong> (nível 3) e ganhar Forma Selvagem. É a única pendência de ficha da mesa.</div>
+
+  <table>
+    <tr><th>Personagem</th><th>Classe</th><th>PV</th><th>CA</th><th>Cargo</th></tr>
+    <tr><td>Thorgrim</td><td>Guerreiro 5</td><td>44</td><td>17</td><td>Timoneiro</td></tr>
+    <tr><td>Silas</td><td>Bruxo 5</td><td>43</td><td>13</td><td>Contramestre</td></tr>
+    <tr><td>Zaira</td><td>Bruxa 5</td><td>38</td><td>16</td><td>Batedora</td></tr>
+    <tr><td>Luiz</td><td>Ladino 5</td><td>28</td><td>14</td><td>Mecânico</td></tr>
+    <tr><td>Irina</td><td>Druida 5</td><td>~33</td><td>14</td><td>Boticária</td></tr>
+  </table>
+
+  <details class="pj"><summary><span class="jogador">Guizão</span><span class="pjnome">Thorgrim, Barbaço-de-Ferro</span><span class="classe">Guerreiro 4 · Anão · Acólito</span></summary><div class="corpo">
+    <h5>O que muda do 5 pro 4</h5>
+    <p><strong>Perde Ataque Extra</strong> (vem no nível 5) e o bônus de proficiência cai pra +2 — ataques vão pra +4. PV cai pra cerca de 36.</p>
+    <h5>Continua tendo</h5>
+    <p>Retomar o Fôlego 3×, Surto de Ação, Maestria em Armas, visão no escuro 120m, resistência a veneno. CA 17 continua sendo a mais alta da mesa.</p>
+    <h5>Por que ele é o Timoneiro</h5>
+    <p>Acólito, disciplinado, Intuição +3 e a maior CA do grupo. Quem comanda a caravana precisa ser o que aguenta ficar exposto no topo do vagão.</p>
+  </div></details>
+
+  <details class="pj"><summary><span class="jogador">Dias</span><span class="pjnome">Silas Veyr, O Homem Certo</span><span class="classe">Bruxo 4 · Tiefling · Patrono Diabólico</span></summary><div class="corpo">
+    <h5>O que muda do 5 pro 4</h5>
+    <p><strong>Perde Lâmina Sedenta</strong> e as magias de 3º círculo — nada de Bola de Fogo. Espaços viram <strong>2 de 2º círculo</strong>. Rajada Mística continua com <strong>2 raios</strong>. Ataque mágico +5, CD 13.</p>
+    <h5>Continua tendo</h5>
+    <p>Pacto da Lâmina, Bênção do Sombrio (8 PV temporários por abate), Armadura das Sombras, Rajada Agonizante.</p>
+    <h5>Por que ele é o Contramestre</h5>
+    <p>A história dele é literalmente sobre contratos, negociação e favores. Enganação +5 e Intimidação +5. É o cara que consegue preço.</p>
+  </div></details>
+
+  <details class="pj"><summary><span class="jogador">Thayssa</span><span class="pjnome">Zaira Ulruun</span><span class="classe">Bruxa 5 · Drow · Lâmina Maldita · Batedora</span></summary>
+    <div class="corpo">
+      <h5>Números</h5>
+      <div class="numeros"><span>CA 16</span><span>PV 38</span><span>Ini +3</span><span>Rajada +7 · 2× 1d10+4</span><span>CD 15</span><span>2 espaços de 3º</span><span>Visão 36m</span></div>
+      <h5>Ficha nova, tudo certo</h5>
+      <p>Ela corrigiu tudo: escudo entrou (CA 16), Carisma subiu pra 18, visão no escuro voltou pra 36m e as armas estão anotadas. Rajada Mística agora sai com <strong>dois raios</strong> de 1d10+4 cada, por causa da Explosão Agonizante.</p>
+      <h5>O que ela faz melhor que todo mundo</h5>
+      <p><strong>Escuridão + Visão do Diabo.</strong> Ela joga treva mágica em cima do inimigo, enxerga lá dentro e ele não. Vantagem pra ela, desvantagem pra ele, de graça, uma vez por descanso longo.</p>
+      <p><strong>Contramágica em 3º círculo</strong> cancela automaticamente qualquer magia de até 3º. Isso apaga metade dos seus truques de mestre — conte com isso e planeje ameaças que não sejam magia.</p>
+      <p><strong>Familiar sprite invisível</strong> pelo Pacto da Corrente. É o poder de Batedora dela na prática: manda o bicho na frente e enxerga pelos olhos dele.</p>
+      <h5>Por que ela é a Batedora</h5>
+      <p>Furtividade +6, Disfarçar-se à vontade, visão de 36m e um familiar invisível. E a agenda dela exige ir sozinha aonde ninguém vai.</p>
+      <h5>Ganchos que a ficha entrega</h5>
+      <p>O vínculo é <em>"firmei um pacto e o preço ainda não foi cobrado"</em>. Numa campanha onde o mundo inteiro está sendo cobrado de alguém, isso é ouro. E o Contato Criminoso dela — a Corte de Espinhos — é o jeito mais fácil de a Sanguessuga achar a Andarilha na Temporada 3.</p>
+    </div>
+  </details>
+
+  <details class="pj"><summary><span class="jogador">Victor</span><span class="pjnome">Luiz</span><span class="classe">Ladino 5 · Humano · Ladrão · Mecânico</span></summary>
+    <div class="corpo">
+      <h5>Números</h5>
+      <div class="numeros"><span>CA 14</span><span>PV 28</span><span>Ini +7</span><span>Besta +7 · 1d8+4</span><span>Adaga +7 · 1d4+4</span><span>Furtivo 3d6</span></div>
+      <h5>Ficha nova</h5>
+      <p>Destreza subiu pra 18, pegou <strong>Alerta</strong> (+3 de iniciativa, total +7 — ele age primeiro em quase todo combate) e <strong>Iniciado em Magia druida</strong>, com Fagulha Estelar, Orientação e Falar com Animais.</p>
+      <p>Ganhou <strong>Esquiva Sobrenatural</strong>: reação pra levar metade do dano de um ataque que ele veja. Com 28 PV ele é o mais frágil da mesa, então essa reação é o que o mantém vivo.</p>
+      <h5>Pendências</h5>
+      <ul>
+        <li><strong>Falta o nome.</strong> A ficha está como "sdua's Character".</li>
+        <li>Ele perdeu as ferramentas de ferreiro e entalhador da versão anterior — sobrou só ferramentas de ladrão. Como Mecânico da Andarilha, vale recuperar pelo menos as de ferreiro.</li>
+      </ul>
+      <h5>O que ele faz melhor que todo mundo</h5>
+      <p><strong>Golpe Astuto.</strong> Ele troca dados de Ataque Furtivo por efeito: envenenar, derrubar ou recuar sem provocar ataque. Numa luta em cima da caravana, <em>derrubar</em> é devastador — quem cai, cai do vagão.</p>
+      <p><strong>Troca de iniciativa.</strong> Pelo talento Alerta, ele pode trocar a iniciativa dele com um aliado. Isso deixa a mesa jogar com a ordem do turno, e é mais forte do que parece.</p>
+      <h5>Alerta de mesa</h5>
+      <p>Continua <strong>Neutro e Mau</strong>. Numa campanha com agendas secretas isso pode virar atrito real entre jogadores — vale alinhar com o Victor até onde ele pretende levar.</p>
+    </div>
+  </details>
+
+  <details class="pj"><summary><span class="jogador">Gigi</span><span class="pjnome">Irina Maremar</span><span class="classe">Druida 4 · Gnoma da Floresta · Sábia</span></summary><div class="corpo">
+    <h5>O que muda do 1 pro 4</h5>
+    <p>PV sobe pra cerca de 27, ganha <strong>Forma Selvagem</strong> (nível 2) e o Círculo dela (nível 3) — precisa escolher: Terra, Lua, Mar ou Estrelas. Espaços: 4 de 1º e 3 de 2º.</p>
+    <h5>Continua tendo</h5>
+    <p>Astúcia Gnômica (vantagem em resistências mentais — a melhor defesa da mesa contra o Cinza), Iniciado em Magia, Percepção +5 e Natureza +6.</p>
+    <h5>Por que ela é a Boticária</h5>
+    <p>Kit de herbalismo, Medicina, Natureza. E a Astúcia Gnômica faz dela a única que consegue trabalhar perto do Cinza sem se perder.</p>
+  </div></details>
+
+  
+
+  
+</section>
+
+<!-- ================= SESSÃO 1 ================= -->
+<section class="painel" id="s1">
+  <h2>Sessão 1 · A roda travada</h2>
+  <p class="subtitulo">Passos 01 a 18 · cerca de 4 horas</p>
+
+  <div class="alerta">Dourado você <strong>fala</strong>. Cinza você <strong>faz</strong>. Vermelho é resposta pronta pra pergunta que eles vão fazer. Toque no passo pra marcar que já passou.</div>
+
+  <div class="bloco-passo">A · Abertura <span class="relogio">40 min</span></div>
+
+  <div class="passo"><span class="n">01</span><div class="txt"><span class="tit">Antes de começar</span>
+    <div class="diga">"Três regras de mesa e a gente começa. Um: ninguém precisa saber regra, eu falo o que rola. Dois: ninguém fala por cima do outro, porque somos sete e vira bagunça. Três: se alguém ficar desconfortável com alguma coisa, fala e eu mudo na hora."</div>
+    <div class="faz">Deixa o som base tocando baixo antes de todo mundo sentar. Escreve num papel no meio da mesa: DISTÂNCIA 8.</div></div></div>
+
+  <div class="passo"><span class="n">02</span><div class="txt"><span class="tit">O mundo em vinte segundos</span>
+    <div class="diga">"O mundo está sendo apagado de leste pra oeste. Não destruído — apagado. A terra que o Cinza atravessa deixa de ter existido, e quem olha pra trás tempo demais perde memória: primeiro os nomes, depois os rostos.<br><br>Faz três gerações que todo mundo caminha pro oeste. Vocês são a tripulação da Andarilha: quarenta vagões acorrentados, quatrocentas pessoas, uma cidade sobre rodas que nunca para mais de seis horas."</div></div></div>
+
+  <div class="passo"><span class="n">03</span><div class="txt"><span class="tit">A abertura</span>
+    <div class="diga">"Vocês estão em cima do vagão 12, e a Andarilha anda. Ela sempre anda. O chão treme desde o dia em que vocês nasceram e nenhum de vocês sabe o que é silêncio.<br><br>Atrás, no horizonte leste, tem uma faixa cinza da altura de uma montanha. Ela não se move rápido. Ela só não para.<br><br>À frente: oeste, poeira, e mais estrada do que qualquer um consegue ver."</div>
+    <div class="faz">Silêncio de três segundos antes de continuar. Deixa a imagem assentar.</div></div></div>
+
+  <div class="passo"><span class="n">04</span><div class="txt"><span class="tit">Cada um no seu posto</span>
+    <div class="faz">Em vez de rodada de apresentação, pergunta o que cada um está fazendo <strong>agora</strong>, no cargo dele. Vai na ordem e usa o nome do cargo:</div>
+    <div class="diga">"Timoneiro, você está na frente. O que você está vendo?"<br>"Boticária, quem passou na sua enfermaria hoje de manhã?"<br>"Mecânico, o que está quebrado essa semana?"<br>"Contramestre, quantos pregos tem no cofre?"<br>"Batedora, quando foi sua última saída?"<br></div>
+    <div class="faz">Aceita qualquer resposta e anota. Isso é a apresentação dos personagens sem parecer apresentação.</div></div></div>
+
+  <div class="passo"><span class="n">05</span><div class="txt"><span class="tit">As agendas</span>
+    <div class="faz">Entrega os cinco papéis dobrados, um por pessoa. Ninguém mostra pra ninguém.</div>
+    <div class="diga">"Todo mundo aqui carrega uma coisa que não contou. Isso não é traição — é o que mantém gente funcionando quando o mundo está acabando. Lê em silêncio, guarda, e joga com isso."</div></div></div>
+
+  <div class="bloco-passo">B · A roda travada <span class="relogio">60 min</span></div>
+
+  <div class="passo"><span class="n">06</span><div class="txt"><span class="tit">O estalo</span>
+    <div class="diga">"Um estalo, lá atrás. Depois um segundo, mais alto. E aí um barulho que ninguém nessa caravana confunde com outra coisa: metal arrastando em pedra.<br><br>O vagão 31 travou. A roda parou de girar e está sendo arrastada, cavando o chão. Quarenta vagões acorrentados — se um trava, todos desaceleram."</div>
+    <div class="faz">Anuncia em voz alta: <strong>dez minutos reais</strong>. Marca no celular. A pressão de tempo é metade da cena.</div></div></div>
+
+  <div class="passo"><span class="n">07</span><div class="txt"><span class="tit">As três frentes</span>
+    <div class="faz">Divide o problema e diz isso pra mesa em voz alta, pra ninguém ficar parado:</div>
+    <div class="diga">"Tem três coisas acontecendo ao mesmo tempo. Alguém tem que chegar na roda. Alguém tem que decidir se a gente para ou corta o vagão. E o vagão 31 tem doze pessoas dentro que estão gritando."</div>
+    <div class="rola"><b>Luiz — Ferramentas <span class="cd">CD 15</span></b>, com desvantagem se ninguém segurar ele.<br><b>Passou:</b> a roda solta, a caravana volta ao ritmo.<br><b>Falhou:</b> trava mais fundo, perde 1 de Distância, e ele pode tentar de novo na próxima rodada.<br><b>Quem segura:</b> Atletismo <span class="cd">CD 12</span> — passou, tira a desvantagem.</div>
+    <div class="rola"><b>Evacuar o vagão 31 — Persuasão <span class="cd">CD 13</span></b> pra acalmar doze pessoas em pânico.<br><b>Falhou:</b> alguém corre pro lado errado e você tem um segundo problema.</div></div></div>
+
+  <div class="passo"><span class="n">08</span><div class="txt"><span class="tit">A decisão do Timoneiro</span>
+    <div class="faz">Duas opções, as duas custam:</div>
+    <div class="diga">"Se a gente parar, a Distância cai de 8 pra 7 e o conserto é seguro. Se a gente cortar o 31 fora, não perde nada de estrada — e perde doze pessoas de casa. Thorgrim, é você que decide. E é agora."</div>
+    <div class="seresp">"Dá pra fazer os dois?" — Não. Parar leva quarenta minutos e cortar leva dois. Escolhe.<br><br>"E se a gente carregar o vagão?" — Boa ideia, mas ele pesa seis toneladas. Rola alguma coisa criativa e eu deixo funcionar parcialmente.</div></div></div>
+
+  <div class="passo"><span class="n">09</span><div class="txt"><span class="tit">O que estava travando</span>
+    <div class="diga">"Preso no eixo, esmagado entre a roda e o suporte, tem alguma coisa que já foi gente.<br><br>Não sangra. Tem metade do rosto — e a outra metade é lisa. Lisa como papel em branco.<br><br>E aí ela fala. Fala um nome. O seu nome."</div>
+    <div class="faz">Diz o nome do personagem de quem tirou a iniciativa mais alta. Se ninguém rolou ainda, escolhe o mais falante da mesa.</div>
+    <div class="rola"><b>Quem ouviu o próprio nome — Sabedoria <span class="cd">CD 13</span></b>.<br><b>Falhou:</b> escolhe uma perícia da ficha dele. Ela some até o descanso longo, e ele sente falta na hora errada.<br><b>Passou:</b> ele ouve o nome e não perde nada — mas você descreve o arrepio mesmo assim.</div>
+    <div class="rola"><b>Identificar o que é isso — Arcanismo ou Religião <span class="cd">CD 15</span></b>.<br><b>Passou:</b> "é gente que o Cinza pegou pela metade. Elas voltam procurando o nome."</div></div></div>
+
+  <div class="passo"><span class="n">10</span><div class="txt"><span class="tit">Combate · Um Que Voltou</span>
+    <div class="faz">Um inimigo só. CA 13, PV 32, toque +5 por 2d6 psíquico. Ficha completa no Bestiário.</div>
+    <div class="faz">A ação especial dele: fala o nome verdadeiro de alguém. Resistência de Sabedoria CD 13 ou a pessoa esquece uma coisa — escolhe uma perícia e ela some até o descanso longo.</div>
+    <div class="seresp">"Dá pra conversar com isso?" — Dá. Se alguém disser o nome <em>dele</em> de volta, ele para. Mas ninguém sabe o nome dele. Ainda.</div>
+    <a class="som" href="https://www.youtube.com/results?search_query=Ghelfi+Skirmish" target="_blank" rel="noopener">▶ Combate</a></div></div>
+
+  <div class="passo"><span class="n">11</span><div class="txt"><span class="tit">Quando ele cai</span>
+    <div class="diga">"Ele para de se mexer. E a metade do rosto que era papel em branco começa a escrever sozinha — letras finas, feias, de quem aprendeu tarde. Um nome. Só que ninguém aqui sabe ler essa letra."</div>
+    <div class="faz">Guarda isso. É o nome dele, e vai ser lido na sessão 6.</div></div></div>
+
+  <div class="bloco-passo">C · Depois <span class="relogio">45 min</span></div>
+
+  <div class="passo"><span class="n">12</span><div class="txt"><span class="tit">A Mestra Vago cobra</span>
+    <div class="faz">Chefe administrativa da caravana. Não gosta da tripulação porque eles resolvem tudo quebrando.</div>
+    <div class="diga">— "Quarenta minutos de atraso. Doze pessoas em pânico. Um vagão riscado. Isso vai no relatório."<br><br>— "E antes que perguntem: sim, existe relatório. Alguém tem que contar o que aconteceu, senão daqui a dois anos ninguém lembra."</div>
+    <div class="seresp">"A gente salvou o vagão!" — "Salvaram. E eu anotei isso também. Eu anoto tudo, é literalmente o meu trabalho."</div></div></div>
+
+  <div class="passo"><span class="n">13</span><div class="txt"><span class="tit">Fogueira</span>
+    <div class="faz">Cena calma, sem rolagem. Corta o som base e liga fogueira. É aqui que a mesa vira grupo.</div>
+    <div class="diga">"À noite a Andarilha desacelera pro ritmo de dormir. Fogueira acesa em cima do vagão 12, dentro de um tambor cortado. Uns quinze moradores sentados. Um deles olha pra vocês e pergunta:<br><br>— É verdade que aquilo falou? Falou o quê?"</div>
+    <div class="faz">Se ninguém puxar assunto, usa o sorteador de Conversa de Fogueira na aba Improviso.</div>
+    <a class="som" href="https://www.youtube.com/results?search_query=Ghelfi+Campfire+Night" target="_blank" rel="noopener">▶ Fogueira</a></div></div>
+
+  <div class="passo"><span class="n">14</span><div class="txt"><span class="tit">Tenso aparece</span>
+    <div class="faz">Garoto de 11 anos que corre pelos vagões levando recado. Sabe de tudo antes de todo mundo e cobra em bala.</div>
+    <div class="diga">— "Eu vi. Eu não devia ter visto, mas eu vi."<br><br>— "Tinha mais. Não era só um daqueles no eixo. Tinha mais três andando do lado da caravana ontem à noite, acompanhando. Iguaizinhos. Eles não subiram."<br><br>— "Se eu contar o resto, você me dá o quê?"</div>
+    <div class="faz">O resto: eles estavam <em>indo</em> pra algum lugar à frente. Não seguindo a Andarilha.</div></div></div>
+
+  <div class="bloco-passo">D · O que vem na frente <span class="relogio">45 min</span></div>
+
+  <div class="passo"><span class="n">15</span><div class="txt"><span class="tit">A Batedora vê primeiro</span>
+    <div class="faz">Cena solo com a Zaira. Dois minutos, só ela, os outros escutam.</div>
+    <div class="diga">"Você vai na frente, como sempre vai sozinha, como a regra proíbe. E do alto de uma pedra você vê: um poço. Um muro baixo. Umas cinquenta pessoas.<br><br>E nenhuma delas está de partida. Tem plantação. Tem varal com roupa. Essa gente está organizada pra <em>ficar</em>."</div>
+    <div class="rola"><b>Zaira — Percepção <span class="cd">CD 13</span></b>.<br><b>Passou:</b> ela repara que o muro tem marca de fogo recente e que tem mais túmulos do que casas.<br><b>Falhou:</b> parece só um vilarejo tranquilo. E isso é pior.</div>
+    <div class="seresp">"Isso é possível?" — Não deveria. O Cinza chega em todo lugar. Ninguém fica.</div></div></div>
+
+  <div class="passo"><span class="n">16</span><div class="txt"><span class="tit">Chegada em Poço Torto</span>
+    <div class="diga">"A Andarilha para. Seis horas no relógio, todo mundo sabe.<br><br>Sai uma mulher do muro, sozinha, com as duas mãos abertas pra mostrar que estão vazias. Cabelo raspado, cinquenta e poucos anos, e uma cicatriz que corta o rosto de cima a baixo.<br><br>— Meu nome é Bandeira. Vocês estão com fome ou com pressa? Porque a gente resolve as duas, mas não ao mesmo tempo."</div>
+    <a class="som" href="https://www.youtube.com/results?search_query=Ghelfi+Small+Village+Ambience" target="_blank" rel="noopener">▶ Vilarejo</a></div></div>
+
+  <div class="passo"><span class="n">17</span><div class="txt"><span class="tit">A oferta</span>
+    <div class="diga">— "O poço aqui não dá água comum. Quem bebe lembra. Lembra do que o Cinza tirou. Nome de mãe, cara de filho, o que for.<br><br>— A gente ficou por isso. Preferimos lembrar a correr.<br><br>— E a oferta é essa: fiquem uma semana, e todas as quatrocentas pessoas de vocês bebem. Todo mundo recupera o que perdeu."</div>
+    <div class="faz">O custo é brutal e você diz na cara: <strong>uma semana parada derruba a Distância de 8 pra 3.</strong> O Cinza fica visível da caravana pela primeira vez.</div>
+    <div class="rola"><b>Intuição <span class="cd">CD 14</span></b> em quem estiver conversando com a Bandeira.<br><b>Passou:</b> ela não está mentindo — mas está omitindo. Tem uma parte que ela vai contar só depois de vocês beberem.<br><b>Falhou:</b> parece completamente sincera. E ela é, tecnicamente.</div>
+    <div class="seresp">"Por que vocês não são alcançados?" — Bandeira: "A gente é. Devagar. Perdemos dois quarteirões ano passado."<br><br>"Qual a pegadinha?" — "Não tem pegadinha. Tem preço, e o preço é o tempo de vocês."<br><br>"Podemos levar a água?" — "Fora do poço ela vira água comum em uma hora. Já tentamos tudo."</div></div></div>
+
+  <div class="passo"><span class="n">18</span><div class="txt"><span class="tit">Corta aqui</span>
+    <div class="diga">— "A gente sabe o que vocês vão dizer. Todo mundo diz. Mas responde honesto antes de decidir:<br><br>— quantos nomes você já esqueceu?"</div>
+    <div class="faz">Corta. Não deixa decidir hoje. Termina a sessão com a mesa discutindo.</div></div></div>
+</section>
+
+<!-- ================= SESSÃO 2 ================= -->
+<section class="painel" id="s2">
+  <h2>Sessão 2 · Poço Torto</h2>
+  <p class="subtitulo">Passos 19 a 38 · cerca de 4 horas</p>
+
+  <div class="bloco-passo">E · A decisão <span class="relogio">40 min</span></div>
+
+  <div class="passo"><span class="n">19</span><div class="txt"><span class="tit">Retomada</span>
+    <div class="diga">"Antes de começar — alguém me conta o que aconteceu semana passada?"</div>
+    <div class="faz">Deixa eles resumirem. Você descobre do que gostaram e ganha cinco minutos.</div></div></div>
+
+  <div class="passo"><span class="n">20</span><div class="txt"><span class="tit">A caravana quer opinar</span>
+    <div class="faz">Antes de o grupo decidir, três moradores aparecem. Cada um representa um lado, e todos têm razão:</div>
+    <div class="diga">Velha Corda: — "Eu esqueci o nome do meu marido faz seis anos. Eu lembro da cara. Lembro da voz. O nome não. Eu bebia essa água de joelhos."<br><br>Mestra Vago: — "Quatrocentas pessoas. Uma semana parada é um terço da nossa margem. Eu não vou trocar sobrevivência por saudade."<br><br>Bico, o carpinteiro: — "Pra que fugir se a gente chega do outro lado sem saber quem é?"</div>
+    <div class="faz">Não resolve por eles. Deixa a mesa brigar por dez minutos.</div></div></div>
+
+  <div class="passo"><span class="n">21</span><div class="txt"><span class="tit">A decisão e o preço</span>
+    <div class="faz"><strong>Se ficarem:</strong> Distância cai pra 3. Todo mundo bebe. Vai pro passo 22.</div>
+    <div class="faz"><strong>Se recusarem:</strong> Distância fica em 8, mas a caravana fica revoltada — três moradores desertam e ficam em Poço Torto, e um deles é alguém que os jogadores conheciam. Pula pro passo 30.</div>
+    <div class="faz"><strong>Se negociarem um meio-termo</strong> (dois dias, só metade das pessoas): aceita. Distância cai pra 5. É a melhor jogada e você premia.</div></div></div>
+
+  <div class="bloco-passo">F · A água <span class="relogio">60 min</span></div>
+
+  <div class="passo"><span class="n">22</span><div class="txt"><span class="tit">Beber</span>
+    <div class="diga">"A água é morna e tem gosto de metal. Desce e não acontece nada por uns dez segundos.<br><br>Aí acontece."</div>
+    <div class="faz">Pergunta pra cada jogador, um por um: <strong>"o que o seu personagem lembrou?"</strong> Aceita tudo. O que eles inventarem vira verdade da campanha — anota.</div></div></div>
+
+  <div class="passo"><span class="n">23</span><div class="txt"><span class="tit">A Velha Corda bebe</span>
+    <div class="faz">Cena da Memorista da caravana, na frente de todos:</div>
+    <div class="diga">"A Velha Corda bebe e não lembra de nada novo. Pelo contrário: uma das memórias que ela guarda para os outros fica <em>mais nítida</em> — e ela percebe, com um frio, que essa é a que ela inventou.<br><br>Ela olha pra vocês. E não conta."</div>
+    <div class="faz">Se algum jogador estiver de olho nela, Intuição CD 14 percebe que ela viu alguma coisa e se calou.</div></div></div>
+
+  <div class="passo"><span class="n">24</span><div class="txt"><span class="tit">O que a Zaira não lembra</span>
+    <div class="faz">Cena especial pra Batedora, só pra ela:</div>
+    <div class="diga">"Você bebe. Nada. Absolutamente nada.<br><br>Não porque você não perdeu memórias — mas porque o Cinza nunca tirou nada de você. E você é a única pessoa em Poço Torto que a água não tem o que devolver."</div>
+    <div class="faz">Bandeira percebe. Ela repara e não diz nada. Ainda.</div></div></div>
+
+  <div class="passo"><span class="n">25</span><div class="txt"><span class="tit">Bandeira conta a verdade</span>
+    <div class="diga">— "Eu vou te contar o que a gente não conta pra caravana nenhuma.<br><br>— O poço não devolve memória do nada. Ele devolve a memória <em>de alguém</em>. Toda vez que uma pessoa lembra aqui, uma pessoa lá fora esquece.<br><br>— A gente não sabe quem. Nunca vai saber. E bebe assim mesmo."</div>
+    <div class="seresp">"Vocês são monstros." — "Somos. E você bebeu."<br><br>"Como vocês descobriram?" — "Uma mulher lembrou do filho e no mesmo dia a irmã dela esqueceu o mesmo menino. As duas estavam aqui."</div></div></div>
+
+  <div class="passo"><span class="n">26</span><div class="txt"><span class="tit">A conta</span>
+    <div class="faz">Se a caravana inteira bebeu, foram <strong>quatrocentas pessoas esquecidas</strong> em algum lugar do mundo. Diz isso em voz alta e deixa o silêncio durar.</div>
+    <div class="diga">— "Vocês trocaram. Todo mundo troca. A única diferença entre a gente é que eu falo em voz alta."</div></div></div>
+
+  <div class="bloco-passo">G · O cerco <span class="relogio">60 min</span></div>
+
+  <div class="passo"><span class="n">27</span><div class="txt"><span class="tit">Eles vêm atrás da água</span>
+    <div class="diga">"De madrugada, o cachorro do Bico começa a uivar e não para. E quando vocês sobem no muro, dá pra ver.<br><br>Dezenas. Andando devagar, em fila, todos vindo na direção do poço. Metade dos rostos é papel em branco. E todos estão dizendo nomes."</div>
+    <div class="faz">São os Que Voltaram. Não vêm matar — vêm <strong>beber</strong>. Querem lembrar quem eram.</div></div></div>
+
+  <div class="passo"><span class="n">28</span><div class="txt"><span class="tit">Combate · cerco em quatro setores</span>
+    <div class="faz">Formato de cerco: divide os sete em quatro frentes e corta entre elas a cada rodada. Dura 4 rodadas fixas.</div>
+    <div class="faz"><strong>Muro norte</strong> — segurar a entrada. 4 inimigos.<br><strong>O poço</strong> — impedir que cheguem na água. 3 inimigos.<br><strong>Casas</strong> — evacuar moradores. Sem combate, mas cada rodada perdida é um ferido.<br><strong>A Andarilha</strong> — proteger a caravana parada. 3 inimigos.</div>
+    <div class="faz">Ficha do Que Voltou no Bestiário. Use 10 no total.</div>
+    <div class="rola"><b>Rolagem de grupo — Sabedoria <span class="cd">CD 13</span></b> na primeira rodada, contra o coro de nomes.<br>Com cinco jogadores, precisa de <b>3 sucessos</b>. Metade ou mais passa, o grupo passa.<br><b>Se falhar como grupo:</b> todos ficam amedrontados na primeira rodada.</div>
+    <div class="rola"><b>Setor Casas — Persuasão ou Atletismo <span class="cd">CD 12</span></b> por rodada pra evacuar.<br>Cada rodada sem ninguém nesse setor = um morador ferido. Diz o nome do morador em voz alta. Sempre.</div>
+    <a class="som" href="https://www.youtube.com/results?search_query=Ghelfi+Skirmish" target="_blank" rel="noopener">▶ Combate</a></div></div>
+
+  <div class="passo"><span class="n">29</span><div class="txt"><span class="tit">A saída que ninguém pensou</span>
+    <div class="faz">Se alguém tiver a ideia de <strong>deixar eles beberem</strong>, funciona. Quem bebe recupera o rosto, lembra quem era, senta no chão e chora. Deixa de ser inimigo.</div>
+    <div class="faz">Bandeira vai ser contra, porque cada gole custa a memória de outra pessoa. E aí a decisão volta pro grupo.</div>
+    <div class="seresp">"Por que ninguém tentou isso antes?" — Bandeira: "A gente tentou. Uma vez. E o preço foi cobrado de gente daqui."</div></div></div>
+
+  <div class="bloco-passo">H · Saída <span class="relogio">40 min</span></div>
+
+  <div class="passo"><span class="n">30</span><div class="txt"><span class="tit">O que sobra de Poço Torto</span>
+    <div class="faz">Depois do cerco, o lugar está machucado. Bandeira faz a oferta final:</div>
+    <div class="diga">— "A gente não aguenta o próximo. Leva a gente junto. Cinquenta pessoas, e a gente trabalha.<br><br>— Ou não leva. E eu não vou te julgar. Você tem quatrocentas pra pensar."</div>
+    <div class="faz">Cinquenta pessoas a mais = comida pra menos. Se aceitarem, a comida vira problema imediato — e o Panela vai ter que explicar as contas dele.</div></div></div>
+
+  <div class="passo"><span class="n">31</span><div class="txt"><span class="tit">O Prego Torto</span>
+    <div class="faz">Bandeira dá de presente, aceitando ou não:</div>
+    <div class="diga">— "Isso aqui a gente achou no fundo do poço quando cavou. É um prego de caravana. Só que não é de nenhuma caravana que existe.<br><br>— Leva. Você vai entender antes de mim."</div>
+    <div class="faz">Item na aba Cantina. Segurando ele, você lembra de uma coisa que o Cinza apagou — e não escolhe qual.</div></div></div>
+
+  <div class="passo"><span class="n">32</span><div class="txt"><span class="tit">A partida</span>
+    <div class="diga">"A Andarilha volta a andar. Leva um minuto inteiro pra sair do lugar — ela sempre leva.<br><br>E quando ela ganha velocidade, todo mundo faz a mesma coisa que sempre faz: não olha pra trás."</div></div></div>
+
+  <div class="passo"><span class="n">33</span><div class="txt"><span class="tit">A conta do Silas</span>
+    <div class="faz">Cena com o Contramestre, na frente do grupo. Prepara a agenda dele:</div>
+    <div class="diga">Mestra Vago: — "Contramestre, o cofre. Eu preciso do número exato, e faz três meses que você me dá o número redondo."<br><br>— "Oitocentos pregos não aparecem do nada no meio de um inverno. Eu quero saber de onde vieram."</div>
+    <div class="faz">Ela não sabe da Rival. Só sabe que a conta não fecha. Isso já é o suficiente pra apertar o jogador.</div></div></div>
+
+  <div class="passo"><span class="n">34</span><div class="txt"><span class="tit">O paciente da Irina</span>
+    <div class="faz">Cena solo com a Boticária:</div>
+    <div class="diga">"O paciente que não fecha ferida bebeu da água também. Você viu — você mesma levou o copo.<br><br>E ele foi o único que reagiu diferente. Ele não lembrou de nada.<br><br>Ele <em>esqueceu</em>. E chorou de alívio."</div></div></div>
+
+  <div class="passo"><span class="n">35</span><div class="txt"><span class="tit">O tremor</span>
+    <div class="diga">"À noite, a caravana inteira sente. Não é a estrada — é o chão embaixo da estrada. Um tremor longo, que passa por baixo de vocês da frente pros fundos, na velocidade de uma coisa nadando.<br><br>E some."</div>
+    <div class="faz">Primeira aparição da Coisa Debaixo da Estrada. Só isso. Não explica, não mostra, e não deixa investigar.</div></div></div>
+
+  <div class="passo"><span class="n">36</span><div class="txt"><span class="tit">Fogueira final</span>
+    <div class="faz">Cena calma pra fechar. Corta o som base.</div>
+    <div class="diga">"Alguém pergunta, em voz alta, pra ninguém em particular:<br><br>— Se você pudesse esquecer uma coisa de propósito, esqueceria?"</div>
+    <div class="faz">Deixa cada jogador responder em personagem. Anota as respostas — voltam na Temporada 4.</div></div></div>
+
+  <div class="passo"><span class="n">37</span><div class="txt"><span class="tit">O gancho</span>
+    <div class="diga">"De manhã, a Batedora volta da ronda mais cedo do que devia. E ela traz uma coisa na mão: uma lança quebrada, com uma tira de couro vermelho amarrada.<br><br>Tem doze dessas fincadas na estrada à frente, em fila, atravessando o caminho de vocês.<br><br>É um pedágio."</div></div></div>
+
+  <div class="passo"><span class="n">38</span><div class="txt"><span class="tit">Fim da sessão</span>
+    <div class="faz">Todo mundo sobe pro nível 5. Pergunta o momento favorito de cada um e anota.</div></div></div>
+</section>
+
+<!-- ================= SESSÃO 3 ================= -->
+<section class="painel" id="s3">
+  <h2>Sessão 3 · Os Cavaleiros da Poeira</h2>
+  <p class="subtitulo">Passos 39 a 56 · cerca de 4 horas</p>
+
+  <div class="bloco-passo">I · O pedágio <span class="relogio">45 min</span></div>
+
+  <div class="passo"><span class="n">39</span><div class="txt"><span class="tit">As lanças</span>
+    <div class="diga">"Doze lanças fincadas na estrada, em fila, com tiras de couro vermelho. Entre elas dá pra passar — a Andarilha cabe. É de propósito.<br><br>Não é um bloqueio. É um aviso de que alguém sabe exatamente a largura da caravana de vocês."</div></div></div>
+
+  <div class="passo"><span class="n">40</span><div class="txt"><span class="tit">O emissário</span>
+    <div class="diga">"Um cavaleiro sozinho, parado no meio da estrada. Não está armado. Levanta a mão quando vocês chegam a cem metros.<br><br>— Bom dia. Vocês têm quarenta vagões. A gente quer dois. Escolham quais.<br><br>— Se escolherem, ninguém morre. Se não escolherem, a gente escolhe, e aí morre gente."</div>
+    <div class="rola"><b>Intuição <span class="cd">CD 12</span></b> — fácil de propósito.<br><b>Passou:</b> ele está com medo. Muito medo. E não é de vocês.<br><b>20 natural:</b> ele olha pro chão duas vezes durante a conversa, sem perceber que faz isso.</div>
+    <div class="seresp">"Quem são vocês?" — "Gente que não tem caravana. A gente teve. Não tem mais."<br><br>"Por que não pegam de quem tem mais?" — "Porque a Sanguessuga mata a gente. Vocês não."<br><br>"E se a gente pagar?" — "Não quero prego. Prego não anda. Eu quero vagão."</div></div></div>
+
+  <div class="passo"><span class="n">41</span><div class="txt"><span class="tit">A escolha impossível</span>
+    <div class="faz">Deixa a mesa discutir. Todas as opções custam:</div>
+    <div class="faz"><strong>Entregar dois vagões</strong> — perde 24 moradores e a caravana perde a fé na tripulação.<br><strong>Recusar</strong> — combate em movimento, e eles pegam o que quiserem.<br><strong>Negociar</strong> — o Silas pode tentar. Persuasão CD 18, difícil de propósito.<br><strong>Enganar</strong> — entregar dois vagões vazios. Funciona, e cria um inimigo pra sempre.</div></div></div>
+
+  <div class="passo"><span class="n">42</span><div class="txt"><span class="tit">O que o Timoneiro pode fazer</span>
+    <div class="faz">Se o Thorgrim declarar aceleração antes da conversa acabar, a Andarilha ganha 1 rodada de vantagem no combate. Custa: o emissário morre atropelado, e não tinha arma.</div>
+    <div class="faz">Deixa isso disponível e não sugere. Se ele fizer, é decisão dele e o grupo vai ter que conviver.</div></div></div>
+
+  <div class="bloco-passo">J · Combate em movimento <span class="relogio">90 min</span></div>
+
+  <div class="passo"><span class="n">43</span><div class="txt"><span class="tit">O ataque</span>
+    <div class="diga">"Eles vêm dos dois lados ao mesmo tempo, e vocês nem viram de onde saíram. Cavalos magros, gente magra, arpéus girando.<br><br>Eles não gritam. Isso é o mais assustador: são silenciosos e organizados, como quem já fez isso cem vezes."</div>
+    <div class="faz">6 Cavaleiros da Poeira. CA 15, PV 38, lança +6 por 1d12+3, deslocamento 18m. Ficha no Bestiário.</div>
+    <a class="som" href="https://www.youtube.com/results?search_query=Ghelfi+Skirmish" target="_blank" rel="noopener">▶ Combate</a></div></div>
+
+  <div class="passo"><span class="n">44</span><div class="txt"><span class="tit">Regras da luta em cima da caravana</span>
+    <div class="faz">Lembra a mesa em voz alta, uma vez, antes da primeira rodada:</div>
+    <div class="faz">Correr mais que metade do deslocamento: Acrobacia CD 10 ou cai. Cair do vagão: 2d6 e fica pra trás — voltar custa uma rodada e Atletismo CD 15, ou alguém joga corda. O Timoneiro pode gritar "vira!" uma vez e derrubar todo mundo do teto, inimigos e aliados.</div></div></div>
+
+  <div class="passo"><span class="n">45</span><div class="txt"><span class="tit">O objetivo real deles</span>
+    <div class="faz">Não é matar. É <strong>enganchar três arpéus no vagão 31</strong> e arrancar ele. Anuncia a cada rodada:</div>
+    <div class="diga">"Primeiro arpéu preso."<br>"Segundo arpéu preso. O vagão está começando a torcer."<br>"Terceiro. O vagão 31 está indo embora — com doze pessoas dentro."</div>
+    <div class="rola"><b>Cortar arpéu:</b> ataque contra <span class="cd">CA 12</span>, qualquer dano corta.<br><b>Puxar o arpéu de volta:</b> Atletismo <span class="cd">CD 14</span> — e o cavaleiro do outro lado vem junto, caindo no vagão.<br><b>Prever onde vem o próximo:</b> Percepção <span class="cd">CD 15</span>, e a pessoa ganha reação pra cortar antes de prender.</div>
+    <div class="faz">Cortar um arpéu é uma ação com um teste fácil. A tensão é escolher entre cortar corda e lutar.</div></div></div>
+
+  <div class="passo"><span class="n">46</span><div class="txt"><span class="tit">Rodada 3 · o tremor</span>
+    <div class="diga">"No meio da luta, o chão treme. E não é a caravana.<br><br>Dois cavalos desaparecem. Não caem, não tropeçam — desaparecem, junto com um pedaço de estrada de três metros. E aí o buraco se fecha.<br><br>Os Cavaleiros param de atacar vocês. Estão olhando pro chão."</div>
+    <div class="faz">Segunda aparição da Coisa. Ela não ataca a caravana ainda. Só come dois cavalos e vai embora.</div></div></div>
+
+  <div class="passo"><span class="n">47</span><div class="txt"><span class="tit">A retirada</span>
+    <div class="diga">"O que sobrou dos Cavaleiros vira e vai embora. Não em ordem — em pânico.<br><br>Um deles grita, e é a primeira vez que algum deles fala alto:<br><br>— ISSO NÃO TAVA AQUI SEMANA PASSADA!"</div></div></div>
+
+  <div class="bloco-passo">K · Depois <span class="relogio">45 min</span></div>
+
+  <div class="passo"><span class="n">48</span><div class="txt"><span class="tit">O prisioneiro</span>
+    <div class="faz">Um Cavaleiro fica pra trás, ferido, com a perna quebrada. Chama-se <strong>Ripa</strong>. Tem uns dezessete anos.</div>
+    <div class="diga">— "Pode matar. Sério. Eu ia matar você."<br><br>— "A gente tinha caravana. Chamava Bem-Vinda. Trinta e um vagões. Aí um dia a gente parou pra consertar um eixo e passou de sete horas.<br><br>— Uma hora. Foi isso."</div>
+    <div class="seresp">"O que aconteceu?" — "O Cinza passou por cima. Eu tava fora, batendo. Voltei e não tinha nada. Nem destroço. Nada."<br><br>"Quantos sobraram?" — "Dezenove. De mil e duzentos."</div></div></div>
+
+  <div class="passo"><span class="n">49</span><div class="txt"><span class="tit">A decisão sobre o Ripa</span>
+    <div class="faz">Matar, largar na estrada, ou levar junto. A Mestra Vago é contra levar. A caravana toda vai saber da decisão até de noite.</div>
+    <div class="faz">Se levarem: Ripa vira NPC recorrente e, na Temporada 3, é ele quem reconhece a Sanguessuga primeiro.</div></div></div>
+
+  <div class="passo"><span class="n">50</span><div class="txt"><span class="tit">O Mecânico dá a notícia</span>
+    <div class="faz">Cena do Luiz. A luta danificou o que já estava ruim:</div>
+    <div class="diga">"O eixo-mestre rachou mais dois centímetros hoje. Você é o único que sabe medir isso, e você mede toda semana.<br><br>Na conta antiga eram sete meses. Na conta de hoje são quatro."</div>
+    <div class="faz">Ele decide se conta pro grupo. Se contar, a campanha muda de tom agora. Se esconder, você aperta de novo na sessão 5.</div></div></div>
+
+  <div class="passo"><span class="n">51</span><div class="txt"><span class="tit">A memória que não devia existir</span>
+    <div class="faz">A Velha Corda para de trabalhar no meio da tarde, o que ela nunca faz.</div>
+    <div class="diga">— "Essa curva eu já fiz."<br><br>— "Não me pergunta quando, que eu não sei. Eu só sei que já fiz. E que da última vez tinha mais gente."</div>
+    <div class="faz">Se alguém insistir, ela descreve a pedra grande à esquerda antes de a caravana chegar nela. E acerta.</div></div></div>
+
+  <div class="passo"><span class="n">52</span><div class="txt"><span class="tit">As marcas</span>
+    <div class="diga">"Quem for olhar embaixo, olhando pro chão, vai ver.<br><br>Debaixo das rodas da Andarilha, na terra dura, tem sulcos antigos. Rasos, cobertos de poeira, quase invisíveis.<br><br>Marcas de roda. Da largura exata da Andarilha.<br><br>Alguém já passou por aqui. Com essa caravana."</div>
+    <div class="faz">Fim da lore desta temporada. Não explica nada.</div>
+    <div class="rola"><b>Sobrevivência <span class="cd">CD 15</span></b> pra ler as marcas.<br><b>Passou:</b> não são de passagem única. São de <b>muitas</b> passagens, no mesmo sulco, ao longo de anos.<br><b>18 ou mais:</b> a marca mais funda está por baixo, e é a mais antiga. Quem passou aqui passou muitas vezes, e faz muito tempo que não passa.</div>
+    <div class="seresp">"Outra caravana igual?" — Não existe outra igual. A Andarilha é única, todo mundo sabe disso.<br><br>"Há quanto tempo?" — Anos. Talvez décadas. A poeira não deixa medir.</div></div></div>
+
+  <div class="passo"><span class="n">53</span><div class="txt"><span class="tit">A Velha Corda</span>
+    <div class="faz">Ela estava esperando esse momento desde a sessão 1. Se alguém comentar das marcas perto dela:</div>
+    <div class="diga">— "Essa curva eu já fiz."<br><br>— "Não me pergunta quando, que eu não sei. Eu só sei que já fiz. E que da última vez tinha mais gente."</div></div></div>
+
+  <div class="passo"><span class="n">54</span><div class="txt"><span class="tit">Fogueira</span>
+    <div class="faz">Cena calma. Som base desligado.</div>
+    <div class="diga">"A caravana está quieta hoje. Não é medo — é a quietude de quando muita coisa aconteceu no mesmo dia e ninguém teve tempo de sentir nada ainda."</div>
+    <div class="faz">Sorteia uma Conversa de Fogueira na aba Improviso, ou deixa eles conversarem entre si. Se dois jogadores começarem a conversar em personagem, cala a boca e deixa correr.</div>
+    <a class="som" href="https://www.youtube.com/results?search_query=Ghelfi+Campfire+Night" target="_blank" rel="noopener">▶ Fogueira</a></div></div>
+
+  <div class="passo"><span class="n">55</span><div class="txt"><span class="tit">O gancho</span>
+    <div class="diga">"De madrugada, o vigia grita. Não de medo — de espanto.<br><br>No horizonte oeste, onde não devia ter nada, tem luz. Muita luz. Luz de cidade, parada, firme, que não se move há muito tempo.<br><br>Uma cidade. De pedra. Com muralha.<br><br>E ela não está fugindo de nada."</div></div></div>
+
+  <div class="passo"><span class="n">56</span><div class="txt"><span class="tit">Fim da sessão</span>
+    <div class="faz">Todo mundo sobe pro nível 6. Começa a Temporada 2 na próxima: Âncora.</div>
+    <div class="faz">Pergunta pra mesa: "o que vocês querem fazer nessa cidade?" A resposta define a sessão 4. Anota.</div></div></div>
+</section>
+
+<!-- ================= TEMPORADAS ================= -->
+<section class="painel" id="adiante">
+  <h2>Adiante</h2>
+  <p class="subtitulo">O que vem depois da sessão 3 — em resumo</p>
+
+  <details class="bloco"><summary><span class="rotulo">Temporada 1 · níveis 4 a 6</span>A Estrada</summary><div class="corpo">
+    <p>Conhecer a Andarilha e sobreviver ao trecho mais seco do caminho.</p>
+    <h4>Missões</h4>
+    <ul>
+      <li><strong>Poço Torto.</strong> A escolha entre lembrar e correr.</li>
+      <li><strong>A Ponte de Corda.</strong> Um desfiladeiro, uma ponte que aguenta 20 vagões, e vocês têm 40.</li>
+      <li><strong>Os Cavaleiros da Poeira.</strong> Primeiro combate em movimento. Eles não querem matar, querem roubar vagão.</li>
+      <li><strong>O Vagão Fechado.</strong> Um vagão que ninguém abre há dois anos. Está na hora.</li>
+      <li><strong>A Criança que Voltou.</strong> Uma menina de oito anos some no Cinza durante a noite e volta no dia seguinte. Inteira. Sorrindo. Ela lembra de tudo — inclusive de coisas que ainda não aconteceram. E quer que os outros vão junto.</li>
+    </ul>
+    <p class="spoiler">Fim da temporada: descobrem as marcas de roda antigas embaixo da própria caravana.</p>
+  </div></details>
+
+  <details class="bloco"><summary><span class="rotulo">Temporada 2 · níveis 6 a 9</span>A Cidade Parada</summary><div class="corpo">
+    <p>Encontram Âncora — uma cidade de pedra que decidiu não fugir. Cinco mil pessoas, muralhas, plantação. E uma teoria de por que o Cinza não as alcança.</p>
+    <h4>Missões</h4>
+    <ul>
+      <li><strong>A entrada.</strong> Âncora só recebe quem entrega uma memória na porta.</li>
+      <li><strong>O Muro de Nomes.</strong> Todos os nomes já esquecidos do mundo, escritos. A Velha Corda reconhece um — e não diz de onde.</li>
+      <li><strong>O Prefeito.</strong> Ele tem 200 anos e não sabe disso.</li>
+      <li><strong>A tentação.</strong> Âncora oferece um lugar pra Andarilha inteira. É genuinamente uma boa oferta.</li>
+      <li><strong>O que sustenta a cidade.</strong> Descobrem o preço, e ele é pago por alguém.</li>
+    </ul>
+    <p class="spoiler">O prefeito é o que parou a caravana na primeira volta. Âncora foi construída em cima da primeira Andarilha, e o Cinza não a alcança porque ela já foi apagada uma vez.</p>
+  </div></details>
+
+  <details class="bloco"><summary><span class="rotulo">Temporada 3 · níveis 9 a 13</span>A Rival</summary><div class="corpo">
+    <p>A Sanguessuga — caravana com o triplo do tamanho, movida a trabalho forçado. Eles cobram a dívida do Silas.</p>
+    <h4>Missões</h4>
+    <ul>
+      <li><strong>A cobrança.</strong> Querem passagem e lugar dentro da Andarilha. A agenda do Silas explode aqui.</li>
+      <li><strong>A corrida.</strong> Duas caravanas, uma passagem estreita. Combate de veículo contra veículo.</li>
+      <li><strong>O infiltrado.</strong> Alguém da Andarilha está passando informação. Não é traição por dinheiro.</li>
+      <li><strong>O motim.</strong> Parte dos 400 quer se juntar à Sanguessuga. E tem razão.</li>
+      <li><strong>O eixo-mestre.</strong> A agenda do Luiz vence. A Andarilha começa a morrer de verdade.</li>
+    </ul>
+  </div></details>
+
+  <details class="bloco"><summary><span class="rotulo">Temporada 4 · níveis 13 a 17</span>O Poente</summary><div class="corpo">
+    <p>O oeste acaba. Chegam ao mar, e não tem mais pra onde ir.</p>
+    <h4>Missões</h4>
+    <ul>
+      <li><strong>A praia.</strong> Milhares de caravanas paradas na areia. Todas as que saíram antes.</li>
+      <li><strong>A volta.</strong> Descobrem que o mundo é redondo, e que o leste é o oeste.</li>
+      <li><strong>A decisão.</strong> Continuar circulando pra sempre, parar e virar Âncora, ou entrar no Cinza.</li>
+      <li><strong>Dentro do Cinza.</strong> Se entrarem: descobrem o que ele é. Não é destruição. É esquecimento — e alguém está esquecendo de propósito.</li>
+    </ul>
+    <p class="spoiler">O Cinza é a memória de um mundo que não aguentou lembrar de si mesmo. Existe uma pessoa lá dentro, e ela está tentando esquecer uma coisa específica. Apagar o mundo é dano colateral.</p>
+  </div></details>
+</section>
+
+<!-- ================= NPCS ================= -->
+<section class="painel" id="npcs">
+  <h2>NPCs</h2>
+  <p class="subtitulo">Quem é, como jogar, o que falar e com qual voz</p>
+
+  <div class="dica">Cada NPC já tem a voz mapeada — os botões escolhem sozinhos pelo nome no texto. Os blocos de segredo vêm borrados: toque para abrir.</div>
+
+  <h3>A bordo da Andarilha</h3>
+  <details class="pj"><summary><span class="jogador">Sessões 1 a 3</span><span class="pjnome">Mestra Vago</span><span class="classe">Voz: Mestra Vago · 6p0P6gez</span></summary>
+    <div class="corpo">
+      <h5>Quem é</h5>
+      <p>Chefe administrativa dos quarenta vagões. Não manda na tripulação de vocês, mas manda em todo o resto — e faz relatório de tudo.</p>
+      <h5>Como jogar</h5>
+      <p>Voz baixa, nunca levanta o tom. Não ameaça: informa, e deixa você concluir sozinho. Ela representa as quatrocentas pessoas contra as cinco de vocês, e quase sempre tem razão.</p>
+      <h5>Falas prontas</h5>
+      <div class="diga">— Isso vai no relatório. Sim, existe relatório. Alguém tem que contar o que aconteceu, senão daqui a dois anos ninguém lembra.</div>
+      <div class="diga">— Quatrocentas pessoas. Eu penso nas quatrocentas. Vocês pensam nas cinco de vocês.</div>
+      <div class="diga">— Eu não vou trocar sobrevivência por saudade.</div>
+      <h5>O que só você sabe</h5>
+      <div class="oculto fechado"><div class="veu"><p>Ela sabe que a conta do cofre não fecha há três meses. Ainda não sabe da Rival, mas está cavando. É ela quem aperta a agenda do Silas.</p></div><div class="aviso">▸ Segredo — toque para abrir</div></div>
+    </div>
+  </details>
+  <details class="pj"><summary><span class="jogador">Sessão 3 em diante</span><span class="pjnome">Velha Corda</span><span class="classe">Voz: Velha Corda · KFcKSkKk</span></summary>
+    <div class="corpo">
+      <h5>Quem é</h5>
+      <p>Noventa anos, cega de um olho, conserta rede. A pessoa mais antiga a bordo.</p>
+      <h5>Como jogar</h5>
+      <p>Fala pouco e sempre no meio de uma frase que ninguém começou. Não explica o que diz. Some da cena antes de responder pergunta.</p>
+      <h5>Falas prontas</h5>
+      <div class="diga">— Essa curva eu já fiz. Não me pergunta quando.</div>
+      <div class="diga">— Quando eu era nova, o mundo era maior. Não é saudade, é medida.</div>
+      <div class="diga">— Eu esqueci o nome do meu marido faz seis anos. Lembro da cara. Lembro da voz. O nome não.</div>
+      <h5>O que só você sabe</h5>
+      <div class="oculto fechado"><div class="veu"><p>Ela é a prova viva de que a Andarilha já deu essa volta. As memórias dela batem com as marcas de roda da sessão 3.</p></div><div class="aviso">▸ Segredo — toque para abrir</div></div>
+    </div>
+  </details>
+  <details class="pj"><summary><span class="jogador">Sessão 1 em diante</span><span class="pjnome">Tenso</span><span class="classe">Voz: A Criança · bICR68fw</span></summary>
+    <div class="corpo">
+      <h5>Quem é</h5>
+      <p>Garoto de 11 anos que corre pelos vagões levando recado. Sabe de tudo antes de todo mundo e cobra em bala.</p>
+      <h5>Como jogar</h5>
+      <p>Entra na cena sem ser chamado, larga uma informação pela metade e negocia o resto. Nunca mente, mas conta só o que foi pago.</p>
+      <h5>Falas prontas</h5>
+      <div class="diga">— Eu vi. Eu não devia ter visto, mas eu vi.</div>
+      <div class="diga">— Se eu contar o resto, você me dá o quê?</div>
+      <div class="diga">— Tinha mais três andando do lado da caravana ontem. Eles não subiram.</div>
+      <h5>O que só você sabe</h5>
+      <div class="oculto fechado"><div class="veu"><p>É o seu jeito mais rápido de dar pista quando a mesa travar. Se você não sabe como fazer os jogadores descobrirem algo, o Tenso viu.</p></div><div class="aviso">▸ Segredo — toque para abrir</div></div>
+    </div>
+  </details>
+  <details class="pj"><summary><span class="jogador">Sessões 1 a 3</span><span class="pjnome">Bico</span><span class="classe">Voz: Narrador de cena</span></summary>
+    <div class="corpo">
+      <h5>Quem é</h5>
+      <p>Carpinteiro. Fala sozinho e sabe o nome de todos os quarenta vagões.</p>
+      <h5>Como jogar</h5>
+      <p>Trabalha enquanto conversa e nunca olha pra quem está falando. Tem cachorro. É a voz do morador comum na mesa.</p>
+      <h5>Falas prontas</h5>
+      <div class="diga">— Pra que fugir se a gente chega do outro lado sem saber quem é?</div>
+      <div class="diga">— Esse vagão aqui chama Teimoso. Todos têm nome. Eu que dei.</div>
+    </div>
+  </details>
+  <details class="pj"><summary><span class="jogador">O segredo central</span><span class="pjnome">O Clandestino</span><span class="classe">Voz: O Clandestino · RGbeQtiSh</span></summary>
+    <div class="corpo">
+      <h5>Quem é</h5>
+      <p>Vive no vagão 39, atrás das caixas. Não dorme, não sangra e não envelhece desde que voltou do Cinza.</p>
+      <h5>Como jogar</h5>
+      <p>Fala em terceira pessoa e se atrapalha com o tempo verbal — mistura o que já aconteceu com o que vai acontecer. Nunca pede nada. Agradece demais.</p>
+      <h5>Falas prontas</h5>
+      <div class="diga">— Nóis não dorme. Nóis não precisa mais.</div>
+      <div class="diga">— Eu lembro de você. Você ainda não me conheceu, mas eu lembro.</div>
+      <div class="diga">— Nóis pode ficar quietinho. Nóis fica bem quietinho.</div>
+      <h5>O que só você sabe</h5>
+      <div class="oculto fechado"><div class="veu"><p>É o paciente da Irina e o alimentado do Panela — nenhum dos dois sabe do outro. E é a mesma coisa que protege a Zaira dentro do Cinza. Duas agendas e um NPC apontando pro mesmo segredo.</p></div><div class="aviso">▸ Segredo — toque para abrir</div></div>
+    </div>
+  </details>
+  <details class="pj"><summary><span class="jogador">Cozinheiro · era cargo de jogador</span><span class="pjnome">Panela</span><span class="classe">Voz: Vendedor · B52raBK4</span></summary>
+    <div class="corpo">
+      <h5>Quem é</h5>
+      <p>Cozinha para quatrocentas pessoas em dois fogões. Cinquenta e poucos anos, braços queimados, humor curto antes das refeições e generoso depois.</p>
+      <h5>Como jogar</h5>
+      <p>Fala enquanto cozinha e nunca para de mexer a panela. Sabe o nome de todo mundo porque todo mundo come. É quem serve os itens da Cantina — o Prato do Cozinheiro é dele.</p>
+      <h5>Falas prontas</h5>
+      <div class="diga">— Come. Depois a gente discute.</div>
+      <div class="diga">— Eu sei quantas bocas tem nessa caravana. Sei melhor que a Vago, e ela tem lista.</div>
+      <div class="diga">— Tá com fome ou tá com raiva? Porque é a mesma cara e eu resolvo as duas igual.</div>
+      <h5>O que só você sabe</h5>
+      <div class="oculto fechado"><div class="veu"><p>Ele raciona dez por cento a mais do que precisa e esconde a diferença — para alimentar o clandestino do vagão 39. É o mesmo que a Irina está tratando. Ele sabe o que aquilo é, e alimenta assim mesmo.</p></div><div class="aviso">▸ Segredo — toque para abrir</div></div>
+    </div>
+  </details>
+  <details class="pj"><summary><span class="jogador">Memorista · era cargo de jogador</span><span class="pjnome">Velha Corda · a Memorista</span><span class="classe">Voz: Velha Corda · KFcKSkKk</span></summary>
+    <div class="corpo">
+      <h5>O cargo agora é dela</h5>
+      <p>Além de tudo que já está no perfil dela acima, a Velha Corda é <strong>a memória oficial da Andarilha</strong>. Quando alguém precisa lembrar de algo que o Cinza apagou, procura ela.</p>
+      <h5>Como usar isso a seu favor</h5>
+      <p>É a sua ferramenta pra dar informação sem parecer que você deu. Ela lembra, mas lembra errado — mistura ordem, troca nomes, e às vezes lembra de coisas que ainda não aconteceram.</p>
+      <div class="diga">— Isso eu guardo pra alguém. Não lembro pra quem.</div>
+      <div class="diga">— Você quer que eu lembre ou quer que eu conte? Não é a mesma coisa.</div>
+      <h5>O que só você sabe</h5>
+      <div class="oculto fechado"><div class="veu"><p>Uma das memórias que ela guarda é falsa — ela inventou numa noite ruim para acalmar a caravana, e funcionou. Hoje quatrocentas pessoas acreditam nela como se fosse história, e a própria Corda não sabe mais qual é.</p></div><div class="aviso">▸ Segredo — toque para abrir</div></div>
+    </div>
+  </details>
+
+  <h3>Poço Torto · sessões 1 e 2</h3>
+  <details class="pj"><summary><span class="jogador">Sessões 1 e 2</span><span class="pjnome">Bandeira</span><span class="classe">Voz: Bandeira · MgqVq3OC</span></summary>
+    <div class="corpo">
+      <h5>Quem é</h5>
+      <p>Líder de Poço Torto. Cabelo raspado, cinquenta e poucos anos, uma cicatriz que corta o rosto de cima a baixo.</p>
+      <h5>Como jogar</h5>
+      <p>Direta ao ponto e sem rodeio. Nunca mente — mas omite, e conta a parte pesada só depois que já é tarde. Não se defende quando acusada.</p>
+      <h5>Falas prontas</h5>
+      <div class="diga">— Vocês estão com fome ou com pressa? Porque a gente resolve as duas, mas não ao mesmo tempo.</div>
+      <div class="diga">— A gente ficou por isso. Preferimos lembrar a correr.</div>
+      <div class="diga">— Toda vez que uma pessoa lembra aqui, uma pessoa lá fora esquece.</div>
+      <div class="diga">— Somos monstros, sim. E você bebeu.</div>
+      <h5>O que só você sabe</h5>
+      <div class="oculto fechado"><div class="veu"><p>Ela reparou que a Zaira bebeu e nada aconteceu. Não comentou. Vai usar isso depois.</p></div><div class="aviso">▸ Segredo — toque para abrir</div></div>
+    </div>
+  </details>
+  <h3>Na estrada</h3>
+  <details class="pj"><summary><span class="jogador">Sessão 3</span><span class="pjnome">Ripa</span><span class="classe">Voz: A Criança · bICR68fw</span></summary>
+    <div class="corpo">
+      <h5>Quem é</h5>
+      <p>Cavaleiro da Poeira, uns dezessete anos. Sobrou da caravana Bem-Vinda, que o Cinza pegou.</p>
+      <h5>Como jogar</h5>
+      <p>Não pede pra viver. Conta a história dele sem drama, como quem já contou muitas vezes. Se levarem junto, vira um dos melhores NPCs da campanha.</p>
+      <h5>Falas prontas</h5>
+      <div class="diga">— Pode matar. Sério. Eu ia matar você.</div>
+      <div class="diga">— A gente parou pra consertar um eixo e passou de sete horas. Uma hora. Foi isso.</div>
+      <div class="diga">— Dezenove. De mil e duzentos.</div>
+      <h5>O que só você sabe</h5>
+      <div class="oculto fechado"><div class="veu"><p>Na Temporada 3 é ele quem reconhece a Sanguessuga primeiro, e sabe como ela funciona por dentro.</p></div><div class="aviso">▸ Segredo — toque para abrir</div></div>
+    </div>
+  </details>
+  <details class="pj"><summary><span class="jogador">Qualquer sessão</span><span class="pjnome">Velho Trilho</span><span class="classe">Voz: Velho Trilho · KFngny3C</span></summary>
+    <div class="corpo">
+      <h5>Quem é</h5>
+      <p>Jura que já viu o mar. Ninguém acredita.</p>
+      <h5>Como jogar</h5>
+      <p>Sotaque carregado, fala arrastado, conta a mesma história de jeitos diferentes. Todo mundo o trata como maluco.</p>
+      <h5>Falas prontas</h5>
+      <div class="diga">— Eu vi o mar, meu fio. Vi com esses óio.</div>
+      <div class="diga">— Água até onde a vista alcança, e não dá pra beber. Que Deus inventa uma coisa dessa?</div>
+      <h5>O que só você sabe</h5>
+      <div class="oculto fechado"><div class="veu"><p>Ele viu mesmo. E isso significa que alguém já chegou no fim do oeste e voltou — o que não deveria ser possível. É o gancho da Temporada 4.</p></div><div class="aviso">▸ Segredo — toque para abrir</div></div>
+    </div>
+  </details>
+  <details class="pj"><summary><span class="jogador">Temporada 1</span><span class="pjnome">A Criança que Voltou</span><span class="classe">Voz: A Criança · bICR68fw</span></summary>
+    <div class="corpo">
+      <h5>Quem é</h5>
+      <p>Menina de oito anos que some no Cinza durante a noite e volta no dia seguinte. Inteira. Sorrindo.</p>
+      <h5>Como jogar</h5>
+      <p>Alegre demais. Fala do Cinza como quem fala de um parque. Convida os outros. Não entende por que ninguém quer ir.</p>
+      <h5>Falas prontas</h5>
+      <div class="diga">— Eu voltei. Foi divertido lá. Você devia ir também.</div>
+      <div class="diga">— Lá dentro tem gente. Muita. Eles perguntaram de você.</div>
+      <div class="diga">— Por que todo mundo tá chorando? Eu tô aqui.</div>
+      <h5>O que só você sabe</h5>
+      <div class="oculto fechado"><div class="veu"><p>Ela lembra de coisas que ainda não aconteceram. Guarda essa missão pra sessão 4 ou 5 — usada cedo é só estranha, usada depois é inesquecível.</p></div><div class="aviso">▸ Segredo — toque para abrir</div></div>
+    </div>
+  </details>
+  <h3>Adiante</h3>
+  <details class="pj"><summary><span class="jogador">Temporada 2</span><span class="pjnome">O Prefeito de Âncora</span><span class="classe">Voz: O Prefeito · 2HmIg4yv</span></summary>
+    <div class="corpo">
+      <h5>Quem é</h5>
+      <p>Governa a cidade que decidiu não fugir. Tem duzentos anos e não sabe disso.</p>
+      <h5>Como jogar</h5>
+      <p>Calmo, hospitaleiro, genuinamente bondoso. Não é vilão — e é isso que torna a Temporada 2 difícil.</p>
+      <h5>Falas prontas</h5>
+      <div class="diga">— A cidade não foge. A cidade fica.</div>
+      <div class="diga">— Vocês podem parar. Todos vocês. Tem espaço.</div>
+      <h5>O que só você sabe</h5>
+      <div class="oculto fechado"><div class="veu"><p>Foi ele quem parou a caravana na primeira volta. Âncora é construída em cima da primeira Andarilha, e o Cinza não a alcança porque ela já foi apagada uma vez.</p></div><div class="aviso">▸ Segredo — toque para abrir</div></div>
+    </div>
+  </details>
+  <details class="pj"><summary><span class="jogador">Temporada 3</span><span class="pjnome">Capataz da Sanguessuga</span><span class="classe">Voz: Capataz · 0pkdtmrx</span></summary>
+    <div class="corpo">
+      <h5>Quem é</h5>
+      <p>A caravana rival, três vezes maior, movida a trabalho forçado.</p>
+      <h5>Como jogar</h5>
+      <p>Educado e profissional. Chama todo mundo de colega. Está apenas cumprindo o acordo que o Silas assinou, e faz questão de deixar isso claro.</p>
+      <h5>Falas prontas</h5>
+      <div class="diga">— Colega. A gente veio cobrar.</div>
+      <div class="diga">— Não quero seus pregos. Prego não anda. Eu quero passagem.</div>
+      <div class="diga">— Nada disso é pessoal. Está tudo escrito.</div>
+      <h5>O que só você sabe</h5>
+      <div class="oculto fechado"><div class="veu"><p>Ele tem cópia do acordo com a assinatura do Silas, e vai mostrar na frente da mesa toda.</p></div><div class="aviso">▸ Segredo — toque para abrir</div></div>
+    </div>
+  </details>
+  <details class="pj"><summary><span class="jogador">Toda parada</span><span class="pjnome">O vendedor da Cantina</span><span class="classe">Voz: Vendedor · B52raBK4</span></summary>
+    <div class="corpo">
+      <h5>Quem é</h5>
+      <p>Quem atende em cada parada. Muda de rosto, nunca de jeito.</p>
+      <h5>Como jogar</h5>
+      <p>Simpático demais, elogia tudo que você olha, e o preço sobe se você demonstrar interesse. Role um d6 no começo da parada: é esse o número de itens de comida disponíveis hoje.</p>
+      <h5>Falas prontas</h5>
+      <div class="diga">— Dois pregos o caldo, quatro a ração. Preço de amigo.</div>
+      <div class="diga">— Esse aí é o último. Sempre é o último, mas hoje é de verdade.</div>
+    </div>
+  </details>
+
+  <h3>A regra do NPC bom</h3>
+  <ul>
+    <li><strong>Uma característica só.</strong> Sotaque, tique ou palavra repetida. Mais que isso você não sustenta por cinco sessões.</li>
+    <li><strong>Todo NPC quer alguma coisa.</strong> Se você não sabe o que ele quer, ele não deveria estar na cena.</li>
+    <li><strong>Diga o nome do morador antes de machucá-lo.</strong> Morador anônimo ferido não é nada. Morador com nome é uma cena.</li>
+    <li><strong>Deixe a mesa se apegar antes de cobrar.</strong> Bico, Tenso e Velha Corda existem pra isso — use eles em cenas bobas nas primeiras sessões.</li>
+  </ul>
+</section>
+
+<!-- ================= TRILHA ================= -->
+<section class="painel" id="trilha">
+  <h2>Trilha</h2>
+  <p class="subtitulo">13 faixas · toque para abrir em outra aba</p>
+
+  <div class="alerta"><strong>Antes de começar:</strong> abre a faixa 02 numa aba separada, em loop e volume baixo, e deixa lá. Se você for procurar faixa no meio da cena, perde exatamente o clima que ela deveria criar.</div>
+
+  <table>
+    <tr><th class="d">#</th><th>Faixa</th><th>Nota</th></tr>
+    <tr><td class="d">01</td><td><strong>Tema de abertura</strong><br><span style="color:var(--poeira);font-size:.86rem">Começo da primeira sessão e de cada temporada</span><br><a class="som" href="https://elevenlabs.io/music/songs/SbgkiQK0A6rp7HVWdLCW" target="_blank" rel="noopener">▶ Tema de abertura</a></td><td style="color:var(--poeira);font-size:.8rem">gerada por você</td></tr>
+    <tr><td class="d">02</td><td><strong>A Andarilha em marcha</strong><br><span style="color:var(--poeira);font-size:.86rem">Som base — toca a sessão inteira, bem baixo</span><br><a class="som" href="https://elevenlabs.io/music/songs/zlFU68DpM94s9zkkkKFr" target="_blank" rel="noopener">▶ A Andarilha em marcha</a></td><td style="color:var(--poeira);font-size:.8rem">gerada por você</td></tr>
+    <tr><td class="d">02b</td><td><strong>Trem · reserva de 10h</strong><br><span style="color:var(--poeira);font-size:.86rem">Se a faixa base cansar ou você quiser algo mais longo</span><br><a class="som" href="https://www.youtube.com/watch?v=xXd-0_q2mNg" target="_blank" rel="noopener">▶ Trem · reserva de 10h</a></td><td style="color:var(--poeira);font-size:.8rem">tela preta, sem anúncio</td></tr>
+    <tr><td class="d">03</td><td><strong>Fogueira</strong><br><span style="color:var(--poeira);font-size:.86rem">Cenas calmas, conversas entre personagens</span><br><a class="som" href="https://www.youtube.com/results?search_query=Ghelfi+Campfire+Night" target="_blank" rel="noopener">▶ Fogueira</a></td><td style="color:var(--poeira);font-size:.8rem">Michael Ghelfi</td></tr>
+    <tr><td class="d">04</td><td><strong>Parada de estrada</strong><br><span style="color:var(--poeira);font-size:.86rem">Poço Torto, vilarejos, mercado</span><br><a class="som" href="https://www.youtube.com/results?search_query=Ghelfi+Small+Village+Ambience" target="_blank" rel="noopener">▶ Parada de estrada</a></td><td style="color:var(--poeira);font-size:.8rem">Michael Ghelfi</td></tr>
+    <tr><td class="d">05</td><td><strong>O Cinza se aproxima</strong><br><span style="color:var(--poeira);font-size:.86rem">Tensão, perseguição lenta, ameaça sem rosto</span><br><a class="som" href="https://www.youtube.com/results?search_query=Ghelfi+Ominous+Tunnel" target="_blank" rel="noopener">▶ O Cinza se aproxima</a></td><td style="color:var(--poeira);font-size:.8rem">ou busque Atrium Carceri</td></tr>
+    <tr><td class="d">06</td><td><strong>Combate</strong><br><span style="color:var(--poeira);font-size:.86rem">Luta normal, no chão</span><br><a class="som" href="https://www.youtube.com/results?search_query=Ghelfi+Skirmish" target="_blank" rel="noopener">▶ Combate</a></td><td style="color:var(--poeira);font-size:.8rem">Michael Ghelfi</td></tr>
+    <tr><td class="d">07</td><td><strong>Combate em movimento</strong><br><span style="color:var(--poeira);font-size:.86rem">Cavaleiros da Poeira, luta em cima da caravana</span><br><a class="som" href="https://www.youtube.com/results?search_query=epic+chase+battle+music+instrumental" target="_blank" rel="noopener">▶ Combate em movimento</a></td><td style="color:var(--poeira);font-size:.8rem">qualquer faixa de perseguição</td></tr>
+    <tr><td class="d">08</td><td><strong>Cerco</strong><br><span style="color:var(--poeira);font-size:.86rem">Defesa em quatro setores, sessão 2</span><br><a class="som" href="https://www.youtube.com/results?search_query=Ghelfi+Siege+Ambience" target="_blank" rel="noopener">▶ Cerco</a></td><td style="color:var(--poeira);font-size:.8rem">Michael Ghelfi</td></tr>
+    <tr><td class="d">09</td><td><strong>Revelação</strong><br><span style="color:var(--poeira);font-size:.86rem">Marcas de roda, verdade da água</span><br><a class="som" href="https://www.youtube.com/results?search_query=dark+ambient+revelation+cue+instrumental" target="_blank" rel="noopener">▶ Revelação</a></td><td style="color:var(--poeira);font-size:.8rem">use curto, 1 minuto</td></tr>
+    <tr><td class="d">10</td><td><strong>Perda</strong><br><span style="color:var(--poeira);font-size:.86rem">Morte de NPC, memória apagada</span><br><a class="som" href="https://www.youtube.com/results?search_query=sad+solo+cello+instrumental" target="_blank" rel="noopener">▶ Perda</a></td><td style="color:var(--poeira);font-size:.8rem">gera antes, não dá tempo na hora</td></tr>
+    <tr><td class="d">11</td><td><strong>Âncora</strong><br><span style="color:var(--poeira);font-size:.86rem">A cidade que não foge, temporada 2</span><br><a class="som" href="https://www.youtube.com/results?search_query=dark+cathedral+organ+ambience" target="_blank" rel="noopener">▶ Âncora</a></td><td style="color:var(--poeira);font-size:.8rem">Michael Ghelfi ou Tabletop Audio</td></tr>
+    <tr><td class="d">12</td><td><strong>Epílogo</strong><br><span style="color:var(--poeira);font-size:.86rem">Final da campanha</span><br><a class="som" href="https://www.youtube.com/results?search_query=bittersweet+instrumental+ending+theme" target="_blank" rel="noopener">▶ Epílogo</a></td><td style="color:var(--poeira);font-size:.8rem">só no último dia</td></tr>
+  </table>
+
+  <h3>As três regras da trilha</h3>
+  <ul>
+    <li><strong>Som base sempre, bem baixo.</strong> A tripulação nasceu ouvindo a Andarilha — pra eles é som de casa. Quando ele some, a mesa sente antes de entender.</li>
+    <li><strong>Corta o som nas cenas de perda.</strong> Silêncio súbito é o efeito mais forte e mais barato que existe. Use nas mortes, nas memórias apagadas e na revelação das marcas de roda.</li>
+    <li><strong>Uma faixa por cena, no máximo.</strong> Ficar trocando música chama atenção pro mestre e tira da história.</li>
+  </ul>
+
+  <h3>Se o tempo apertar</h3>
+  <p>Monta só quatro: <strong>02 marcha, 06 combate, 03 fogueira e 05 tensão</strong>. Cobrem a sessão inteira. As outras nove são refinamento.</p>
+
+  <div class="dica">Toca a trilha em <strong>outro aparelho</strong>, não no tablet. Vídeo do YouTube é o que mais come memória, e é o que faz o navegador fechar a aba deste guia no meio do combate.</div>
+</section>
+
+<!-- ================= NARRAÇÃO ================= -->
+<section class="painel" id="narracao">
+  <h2>Narração</h2>
+  <p class="subtitulo">17 trechos · voz gerada na hora</p>
+
+  <div class="chave">
+    <label for="api-key">Chave da ElevenLabs</label>
+    <input id="api-key" type="password" placeholder="cole aqui" autocomplete="off" spellcheck="false">
+    <label for="voz-id">ID da voz</label>
+    <input id="voz-id" type="text" placeholder="Df0A8fHl2LOO7kDNIlpg" autocomplete="off" spellcheck="false">
+    <label for="voz-fem">ID da voz feminina · para as NPCs mulheres</label>
+    <input id="voz-fem" type="text" placeholder="cole aqui (opcional)" autocomplete="off" spellcheck="false">
+    <label style="display:flex;align-items:center;gap:9px;text-transform:none;letter-spacing:0;
+      font-family:'Spectral',Georgia,serif;font-size:.95rem;color:var(--osso);margin-bottom:12px">
+      <input type="checkbox" id="ptbr" checked style="width:auto;margin:0">
+      Forçar português do Brasil
+    </label>
+    <label for="estab">Estabilidade · modelo Eleven v3</label>
+    <select id="estab" style="width:100%;background:var(--noite);border:1px solid var(--linha);color:var(--osso);
+      font-family:'IBM Plex Mono',monospace;font-size:.82rem;padding:11px;border-radius:2px;margin-bottom:9px">
+      <option value="0">Criativo · expressivo, define o tom pelo texto</option>
+      <option value="0.5">Natural · equilibrado</option>
+      <option value="1">Robusto · estável e previsível</option>
+    </select>
+    <button class="btn" id="salvar-chave">Salvar neste aparelho</button>
+    <span id="estado-voz"></span>
+  </div>
+
+  <div class="alerta">A chave fica guardada <strong>só neste navegador, neste aparelho</strong> — ela não faz parte do arquivo. Se você mandar o HTML pra alguém, vai sem chave. Se emprestar o tablet, apaga com o botão da barra do topo.</div>
+
+  <div class="dica">Sem chave preenchida, os botões usam a voz de leitura do próprio tablet. Qualidade bem menor, mas funciona offline e não gasta nada.</div>
+
+  <div class="dica">Cada trecho é gerado uma vez e fica na memória enquanto a página estiver aberta — apertar de novo não gasta crédito. Ouça antes da sessão pra saber se a voz agrada.</div>
+
+  <div class="dica">O Eleven v3 entende <strong>marcações de atuação</strong> escritas em inglês no meio do texto: <em>[whispers]</em>, <em>[sighs]</em>, <em>[laughs]</em>, <em>[angry]</em>, <em>[curious]</em>, <em>[sarcastic]</em>. Reticências criam pausa e MAIÚSCULA cria ênfase. Se quiser dirigir uma fala específica, edita o texto antes de gerar.</div>
+
+  <div class="alerta">Se mesmo com o português do Brasil marcado a voz sair com sotaque de Portugal, o problema é a <strong>voz</strong>, não a configuração — ela foi treinada em outro sotaque. Nesse caso procure vozes marcadas como <em>Portuguese (Brazil)</em> na biblioteca e troca o ID.</div>
+
+  <div class="alerta">Criativo é o mais expressivo, mas a própria ElevenLabs avisa que ele erra mais — pode inventar entonação estranha. Se um trecho sair esquisito, gera de novo ou passa pra Natural.</div>
+
+  <div class="narr" data-n="0"><span class="ntit">Abertura do mundo</span><span class="nonde">Sessão 1 · passo 02</span><span class="ntxt">O mundo está sendo apagado de leste para oeste. Não destruído — apagado. A terra que o Cinza atravessa deixa de ter existido, e quem olha para trás por tempo demais perde memória: primeiro os nomes, depois os rostos.
+
+Faz três gerações que todos caminham para o oeste. Vocês são a tripulação da Andarilha: quarenta vagões acorrentados, quatrocentas pessoas, uma cidade sobre rodas que nunca para mais de seis horas.</span><br><button class="nbtn">▶ Narrar</button></div>
+  <div class="narr" data-n="1"><span class="ntit">A Andarilha</span><span class="nonde">Sessão 1 · passo 03</span><span class="ntxt">Vocês estão em cima do vagão doze, e a Andarilha anda. Ela sempre anda. O chão treme desde o dia em que vocês nasceram, e nenhum de vocês sabe o que é silêncio.
+
+Atrás, no horizonte leste, há uma faixa cinza da altura de uma montanha. Ela não se move rápido. Ela apenas não para.
+
+À frente: oeste, poeira, e mais estrada do que qualquer um consegue ver.</span><br><button class="nbtn">▶ Narrar</button></div>
+  <div class="narr" data-n="2"><span class="ntit">A roda travada</span><span class="nonde">Sessão 1 · passo 06</span><span class="ntxt">Um estalo, lá atrás. Depois um segundo, mais alto. E então um barulho que ninguém nesta caravana confunde com outra coisa: metal arrastando em pedra.
+
+O vagão trinta e um travou. A roda parou de girar e está sendo arrastada, cavando o chão. Quarenta vagões acorrentados. Se um trava, todos desaceleram.</span><br><button class="nbtn">▶ Narrar</button></div>
+  <div class="narr" data-n="3"><span class="ntit">Um Que Voltou</span><span class="nonde">Sessão 1 · passo 09</span><span class="ntxt">Preso no eixo, esmagado entre a roda e o suporte, há alguma coisa que já foi gente.
+
+Não sangra. Tem metade do rosto. E a outra metade é lisa. Lisa como papel em branco.
+
+E então ela fala. Fala um nome.</span><br><button class="nbtn">▶ Narrar</button></div>
+  <div class="narr" data-n="4"><span class="ntit">A oferta da Bandeira</span><span class="nonde">Sessão 1 · passo 17</span><span class="ntxt">O poço aqui não dá água comum. Quem bebe, lembra. Lembra do que o Cinza levou. Nome de mãe, rosto de filho, o que for.
+
+A gente ficou por isso. Preferimos lembrar a correr.
+
+A oferta é essa: fiquem uma semana, e todas as quatrocentas pessoas de vocês bebem. Todo mundo recupera o que perdeu.</span><br><button class="nbtn">▶ Narrar</button></div>
+  <div class="narr" data-n="5"><span class="ntit">A verdade da água</span><span class="nonde">Sessão 2 · passo 25</span><span class="ntxt">Eu vou te contar o que a gente não conta para caravana nenhuma.
+
+O poço não devolve memória do nada. Ele devolve a memória de alguém. Toda vez que uma pessoa lembra aqui, uma pessoa lá fora esquece.
+
+A gente não sabe quem. Nunca vai saber. E bebe assim mesmo.</span><br><button class="nbtn">▶ Narrar</button></div>
+  <div class="narr" data-n="6"><span class="ntit">O cerco</span><span class="nonde">Sessão 2 · passo 27</span><span class="ntxt">De madrugada, o cachorro começa a uivar e não para. E quando vocês sobem no muro, dá para ver.
+
+Dezenas. Andando devagar, em fila, todos vindo na direção do poço. Metade dos rostos é papel em branco. E todos estão dizendo nomes.</span><br><button class="nbtn">▶ Narrar</button></div>
+  <div class="narr" data-n="7"><span class="ntit">O tremor</span><span class="nonde">Sessão 2 · passo 35</span><span class="ntxt">À noite, a caravana inteira sente. Não é a estrada — é o chão embaixo da estrada. Um tremor longo, que passa por baixo de vocês da frente para os fundos, na velocidade de uma coisa nadando.
+
+E some.</span><br><button class="nbtn">▶ Narrar</button></div>
+  <div class="narr" data-n="8"><span class="ntit">As marcas de roda</span><span class="nonde">Sessão 3 · passo 52</span><span class="ntxt">Quem for olhar embaixo, olhando para o chão, vai ver.
+
+Debaixo das rodas da Andarilha, na terra dura, há sulcos antigos. Rasos, cobertos de poeira, quase invisíveis.
+
+Marcas de roda. Da largura exata da Andarilha.
+
+Alguém já passou por aqui. Com esta caravana.</span><br><button class="nbtn">▶ Narrar</button></div>
+  <div class="narr" data-n="9"><span class="ntit">Âncora</span><span class="nonde">Sessão 3 · passo 55</span><span class="ntxt">De madrugada, o vigia grita. Não de medo — de espanto.
+
+No horizonte oeste, onde não deveria haver nada, há luz. Muita luz. Luz de cidade, parada, firme, que não se move há muito tempo.
+
+Uma cidade. De pedra. Com muralha. E ela não está fugindo de nada.</span><br><button class="nbtn">▶ Narrar</button></div>
+  <div class="narr" data-n="10"><span class="ntit">Agenda · Thorgrim</span><span class="nonde">Timoneiro</span><span class="ntxt">A rota oficial leva a um porto que não existe mais. Você descobriu há duas semanas, e não contou para ninguém.</span><br><button class="nbtn">▶ Narrar</button></div>
+  <div class="narr" data-n="11"><span class="ntit">Agenda · Zaira</span><span class="nonde">Batedora</span><span class="ntxt">Você chegou a dez metros do Cinza e não perdeu nenhuma memória. Nenhuma. Você não sabe por quê, e tem medo de descobrir.</span><br><button class="nbtn">▶ Narrar</button></div>
+  <div class="narr" data-n="12"><span class="ntit">Agenda · Luiz</span><span class="nonde">Mecânico</span><span class="ntxt">A Andarilha está morrendo. Você fez as contas três vezes: entre quatro e sete meses até o eixo-mestre ceder. E não existe peça de reposição no mundo, porque o mundo está sendo apagado.</span><br><button class="nbtn">▶ Narrar</button></div>
+  <div class="narr" data-n="13"><span class="ntit">Agenda · Irina</span><span class="nonde">Boticária</span><span class="ntxt">Você está tratando alguém que deveria ter morrido há três semanas. Os ferimentos não fecham, mas a pessoa não piora. E não dorme.</span><br><button class="nbtn">▶ Narrar</button></div>
+  <div class="narr" data-n="14"><span class="ntit">Agenda · Silas</span><span class="nonde">Contramestre</span><span class="ntxt">Você deve oitocentos pregos para a caravana Rival. Foi assim que a Andarilha atravessou o inverno passado, e ninguém soube.</span><br><button class="nbtn">▶ Narrar</button></div>
+  <div class="narr" data-n="15"><span class="ntit">Segredo · Velha Corda</span><span class="nonde">NPC · Memorista</span><span class="ntxt">Entre as memórias que você guarda, há uma que você inventou. Foi numa noite ruim, para acalmar a caravana. Funcionou. Hoje quatrocentas pessoas acreditam nela como se fosse história.</span><br><button class="nbtn">▶ Narrar</button></div>
+  <div class="narr" data-n="16"><span class="ntit">Segredo · Panela</span><span class="nonde">NPC · Cozinheiro</span><span class="ntxt">Você está racionando dez por cento a mais do que precisa, e escondendo a diferença. Não para você — para uma pessoa específica que não está no manifesto da caravana.</span><br><button class="nbtn">▶ Narrar</button></div>
+
+  <h3>Elenco de vozes</h3>
+  <p style="color:var(--poeira);font-size:.92rem;margin-bottom:12px">Cada fala das abas de sessão usa a voz certa automaticamente, pelo nome do NPC no texto. Testa aqui antes da mesa.</p>
+  <div class="sfx" data-voz="narrador" data-teste="A Andarilha anda. Ela sempre anda."><div class="stxt"><span class="snome">Narrador de cena</span><span class="squando">Padrão das abas de sessão. Toda descrição sem NPC falando.</span></div><button class="sbtn">▶ Testar</button></div>
+  <div class="sfx" data-voz="epico" data-teste="O mundo está sendo apagado de leste para oeste."><div class="stxt"><span class="snome">Narrador do mundo</span><span class="squando">Aberturas de sessão, ganchos de fim e a apresentação do Cinza.</span></div><button class="sbtn">▶ Testar</button></div>
+  <div class="sfx" data-voz="cinza" data-teste="Eu lembro de você. Você ainda não me conheceu."><div class="stxt"><span class="snome">Sussurro</span><span class="squando">As sete agendas secretas, no fone do jogador. Nada de narração comum.</span></div><button class="sbtn">▶ Testar</button></div>
+  <div class="sfx" data-voz="clandestino" data-teste="Nóis não dorme. Nóis não precisa mais."><div class="stxt"><span class="snome">O Clandestino</span><span class="squando">O que voltou do Cinza e vive atrás das caixas do vagão 39. Não dorme, não sangra.</span></div><button class="sbtn">▶ Testar</button></div>
+  <div class="sfx" data-voz="bandeira" data-teste="Vocês estão com fome ou com pressa?"><div class="stxt"><span class="snome">Bandeira</span><span class="squando">Líder de Poço Torto. Dura, prática, direta.</span></div><button class="sbtn">▶ Testar</button></div>
+  <div class="sfx" data-voz="vago" data-teste="Isso vai no relatório. Sim, existe relatório."><div class="stxt"><span class="snome">Mestra Vago</span><span class="squando">Chefe dos vagões. Voz baixa e controlada, nunca levanta o tom.</span></div><button class="sbtn">▶ Testar</button></div>
+  <div class="sfx" data-voz="corda" data-teste="Essa curva eu já fiz. Não me pergunta quando."><div class="stxt"><span class="snome">Velha Corda</span><span class="squando">Noventa anos, cega de um olho, a mais antiga a bordo.</span></div><button class="sbtn">▶ Testar</button></div>
+  <div class="sfx" data-voz="trilho" data-teste="Eu vi o mar, meu fio. Vi com esses óio."><div class="stxt"><span class="snome">Velho Trilho</span><span class="squando">Jura que já viu o mar. Ninguém acredita. Ele viu.</span></div><button class="sbtn">▶ Testar</button></div>
+  <div class="sfx" data-voz="prefeito" data-teste="A cidade não foge. A cidade fica."><div class="stxt"><span class="snome">O Prefeito de Âncora</span><span class="squando">Duzentos anos e não sabe disso. Temporada 2.</span></div><button class="sbtn">▶ Testar</button></div>
+  <div class="sfx" data-voz="capataz" data-teste="Colega. A gente veio cobrar."><div class="stxt"><span class="snome">Capataz da Sanguessuga</span><span class="squando">A caravana rival. Temporada 3.</span></div><button class="sbtn">▶ Testar</button></div>
+  <div class="sfx" data-voz="crianca" data-teste="Eu voltei. Foi divertido lá. Você devia ir também."><div class="stxt"><span class="snome">A Criança que Voltou</span><span class="squando">A menina que sumiu no Cinza e voltou sorrindo. Também serve pra Quina e pro Tenso.</span></div><button class="sbtn">▶ Testar</button></div>
+  <div class="sfx" data-voz="coisa" data-teste="O chão embaixo de vocês não é chão."><div class="stxt"><span class="snome">A Coisa e as criaturas grandes</span><span class="squando">A Coisa Debaixo da Estrada, e qualquer criatura enorme.</span></div><button class="sbtn">▶ Testar</button></div>
+  <div class="sfx" data-voz="vendedor" data-teste="Dois pregos o caldo, quatro a ração. Preço de amigo."><div class="stxt"><span class="snome">O vendedor da Cantina</span><span class="squando">Quem atende em cada parada.</span></div><button class="sbtn">▶ Testar</button></div>
+
+  <h3>Como usar na mesa</h3>
+  <ul>
+    <li>Gera os trechos <strong>antes</strong> da sessão, um por um. Aí durante a mesa toca instantâneo.</li>
+    <li>As cinco agendas: entrega um fone pro jogador e deixa ele ouvir a dele sozinho. Os dois últimos são segredos de NPC, pra você. É melhor que ler no papel.</li>
+    <li>Se a internet cair no meio da sessão, os botões voltam sozinhos pra voz do tablet.</li>
+  </ul>
+</section>
+
+<!-- ================= EFEITOS ================= -->
+<section class="painel" id="efeitos">
+  <h2>Efeitos sonoros</h2>
+  <p class="subtitulo">22 efeitos · gera uma vez, toca a sessão inteira</p>
+
+  <div class="alerta"><strong>Gera tudo antes da sessão.</strong> Efeito precisa tocar no instante exato — esperar a API responder no meio de um crítico mata o efeito. Aperta o botão abaixo e deixa rodando enquanto você prepara a mesa.</div>
+
+  <div class="sorteio">
+    <button class="btn" id="gerar-todos">Gerar todos os efeitos</button>
+    <span id="prog-sfx">usa a chave salva na aba Narração</span>
+  </div>
+
+  <div class="dica">Depois de gerados, ficam guardados até você fechar a página — apertar de novo toca na hora e não gasta crédito. Se fechar o navegador, precisa gerar de novo.</div>
+
+  <h3>A Andarilha</h3>
+  <div class="sfx" data-s="0" data-dur="3" data-prompt="heavy iron chain under extreme tension snapping violently, metallic whip crack, hard reverb tail"><div class="stxt"><span class="snome">Corrente arrebentando</span><span class="squando">quando um vagão se solta ou o arpéu vence</span></div><button class="sbtn">▶ Gerar</button></div>
+  <div class="sfx" data-s="1" data-dur="5" data-prompt="massive iron train brakes screeching to a halt, deep grinding steel on steel, long decay"><div class="stxt"><span class="snome">Freio de emergência</span><span class="squando">a Andarilha parando de repente</span></div><button class="sbtn">▶ Gerar</button></div>
+  <div class="sfx" data-s="2" data-dur="3" data-prompt="heavy iron coupling released, metal clanging apart, wagon drifting away"><div class="stxt"><span class="snome">Vagão desacoplando</span><span class="squando">cortar o vagão 31 fora</span></div><button class="sbtn">▶ Gerar</button></div>
+  <div class="sfx" data-s="3" data-dur="4" data-prompt="iron wheel locking and dragging over hard rock, continuous grinding metal, gravel"><div class="stxt"><span class="snome">Roda travando</span><span class="squando">sessão 1, passo 06</span></div><button class="sbtn">▶ Gerar</button></div>
+  <div class="sfx" data-s="4" data-dur="6" data-prompt="enormous iron caravan slowly accelerating, chains tightening one by one, rhythmic metallic clanking building"><div class="stxt"><span class="snome">Ganhando velocidade</span><span class="squando">a caravana voltando a andar</span></div><button class="sbtn">▶ Gerar</button></div>
+  <div class="sfx" data-s="5" data-dur="5" data-prompt="huge machine powering down, chains settling, metal ticking as it cools, sudden quiet"><div class="stxt"><span class="snome">Tudo parando</span><span class="squando">o silêncio quando a Andarilha para</span></div><button class="sbtn">▶ Gerar</button></div>
+  <h3>O Cinza e Os Que Voltaram</h3>
+  <div class="sfx" data-s="6" data-dur="6" data-prompt="many overlapping distant whispers speaking names, cold reverb, no words intelligible, deeply unsettling"><div class="stxt"><span class="snome">Sussurro de nomes</span><span class="squando">os Que Voltaram se aproximando</span></div><button class="sbtn">▶ Gerar</button></div>
+  <div class="sfx" data-s="7" data-dur="8" data-prompt="vast low sub-bass drone approaching, air being emptied, all other sound swallowed into silence"><div class="stxt"><span class="snome">O Cinza passando</span><span class="squando">quando ele aparece ou alcança</span></div><button class="sbtn">▶ Gerar</button></div>
+  <div class="sfx" data-s="8" data-dur="4" data-prompt="reversed metallic shimmer draining into silence, brief high whine, hollow emptiness"><div class="stxt"><span class="snome">Memória apagada</span><span class="squando">falha na resistência contra o Cinza</span></div><button class="sbtn">▶ Gerar</button></div>
+  <div class="sfx" data-s="9" data-dur="3" data-prompt="distorted fragment of a human voice, dry papery rasp, whispering a single word"><div class="stxt"><span class="snome">A voz do Que Voltou</span><span class="squando">quando ele diz o nome de alguém</span></div><button class="sbtn">▶ Gerar</button></div>
+  <div class="sfx" data-s="10" data-dur="6" data-prompt="deep earth rumble passing underneath, soil shifting, something enormous moving below ground"><div class="stxt"><span class="snome">Tremor sob a estrada</span><span class="squando">a Coisa Debaixo da Estrada</span></div><button class="sbtn">▶ Gerar</button></div>
+  <h3>Combate</h3>
+  <div class="sfx" data-s="11" data-dur="2" data-prompt="heavy blunt impact against metal armor, deep dent, single hit with short reverb"><div class="stxt"><span class="snome">Impacto pesado</span><span class="squando">acerto forte</span></div><button class="sbtn">▶ Gerar</button></div>
+  <div class="sfx" data-s="12" data-dur="2" data-prompt="devastating sharp strike, blade tearing through metal, brief violent impact"><div class="stxt"><span class="snome">Crítico</span><span class="squando">20 natural</span></div><button class="sbtn">▶ Gerar</button></div>
+  <div class="sfx" data-s="13" data-dur="3" data-prompt="body falling from a fast moving vehicle, tumbling hard on gravel and dust"><div class="stxt"><span class="snome">Queda do vagão</span><span class="squando">alguém cai da caravana</span></div><button class="sbtn">▶ Gerar</button></div>
+  <div class="sfx" data-s="14" data-dur="3" data-prompt="grappling hook thrown and biting into wood and metal, rope snapping tight"><div class="stxt"><span class="snome">Arpéu prendendo</span><span class="squando">Cavaleiros da Poeira</span></div><button class="sbtn">▶ Gerar</button></div>
+  <div class="sfx" data-s="15" data-dur="5" data-prompt="galloping horses approaching fast on dry dirt, hooves and dust, riding alongside"><div class="stxt"><span class="snome">Cavalos chegando</span><span class="squando">a investida</span></div><button class="sbtn">▶ Gerar</button></div>
+  <div class="sfx" data-s="16" data-dur="2" data-prompt="clumsy metallic clatter, weapon slipping and hitting the floor, awkward tumble"><div class="stxt"><span class="snome">Falha crítica</span><span class="squando">1 natural</span></div><button class="sbtn">▶ Gerar</button></div>
+  <h3>Momentos de mesa</h3>
+  <div class="sfx" data-s="17" data-dur="3" data-prompt="warm resonant chime, single low bell with bright shimmer, uplifting and clean"><div class="stxt"><span class="snome">Subida de nível</span><span class="squando">fim de sessão</span></div><button class="sbtn">▶ Gerar</button></div>
+  <div class="sfx" data-s="18" data-dur="5" data-prompt="one deep bell toll fading slowly into complete silence, heavy and sparse"><div class="stxt"><span class="snome">Morte</span><span class="squando">quando alguém morre de verdade</span></div><button class="sbtn">▶ Gerar</button></div>
+  <div class="sfx" data-s="19" data-dur="4" data-prompt="low ominous swell rising and cutting off abruptly, discovery sting, dread"><div class="stxt"><span class="snome">Revelação</span><span class="squando">marcas de roda, verdade da água</span></div><button class="sbtn">▶ Gerar</button></div>
+  <div class="sfx" data-s="20" data-dur="5" data-prompt="wooden bucket lowered into a deep stone well, rope creaking, distant splash echoing up"><div class="stxt"><span class="snome">O poço</span><span class="squando">Poço Torto, sessão 2</span></div><button class="sbtn">▶ Gerar</button></div>
+  <div class="sfx" data-s="21" data-dur="3" data-prompt="match struck and fire catching on dry wood, first crackles"><div class="stxt"><span class="snome">Fogueira acendendo</span><span class="squando">começo das cenas calmas</span></div><button class="sbtn">▶ Gerar</button></div>
+
+  <h3>Como usar sem exagerar</h3>
+  <ul>
+    <li><strong>No máximo um efeito por cena.</strong> Efeito demais vira desenho animado.</li>
+    <li><strong>Toca junto com a frase, não depois.</strong> Aperta o botão e fala por cima.</li>
+    <li><strong>Os melhores são os três primeiros da lista.</strong> Corrente, freio e roda travando são os sons da Andarilha — use eles até a mesa reconhecer sem você explicar.</li>
+    <li><strong>Guarda o "Morte" e o "O Cinza passando".</strong> Se usar nas primeiras sessões, perdem o peso quando você precisar de verdade.</li>
+  </ul>
+</section>
+
+<!-- ================= ROLAGENS ================= -->
+<section class="painel" id="rolagens">
+  <h2>Rolagens</h2>
+  <p class="subtitulo">O que pedir, quando pedir e qual a dificuldade</p>
+
+  <div class="alerta"><strong>A regra que resolve 90% das dúvidas:</strong> só peça rolagem quando <em>falhar for interessante</em>. Se a falha só trava a cena, não role — deixa acontecer.</div>
+
+  <h3>As cinco dificuldades</h3>
+  <table>
+    <tr><th class="d">CD</th><th>Quando usar</th></tr>
+    <tr><td class="d">10</td><td>Fácil. Qualquer um consegue com um pouco de sorte.</td></tr>
+    <tr><td class="d">13</td><td>Normal. Este é o seu padrão — na dúvida, use 13.</td></tr>
+    <tr><td class="d">15</td><td>Difícil. Precisa ser bom nisso.</td></tr>
+    <tr><td class="d">18</td><td>Muito difícil. Só o especialista, e com sorte.</td></tr>
+    <tr><td class="d">20</td><td>Quase impossível. Use pouco, e avise antes.</td></tr>
+  </table>
+
+  <h3>Frases prontas pra pedir</h3>
+  <div class="diga">"Rola um d20 e soma a Percepção da sua ficha."</div>
+  <div class="diga">"Antes de rolar: o que você quer que aconteça?" — dá a descrição de graça.</div>
+  <div class="diga">"Não precisa rolar, isso você consegue." — use muito.</div>
+  <div class="diga">"Todo mundo rola. Se metade passar, o grupo passa." — para testes coletivos.</div>
+  <div class="diga">"Você consegue, mas vai custar. Topa?" — em vez de falha seca.</div>
+
+  <h3>Situações da campanha</h3>
+  <table>
+    <tr><th>Situação</th><th>Rolagem</th><th class="d">CD</th><th>Se falhar</th></tr>
+    <tr><td>Subir no vagão em movimento</td><td>Atletismo</td><td class="d">13</td><td>Fica pendurado, gasta o turno</td></tr>
+    <tr><td>Saltar entre vagões</td><td>Acrobacia</td><td class="d">12</td><td>2d6 e fica caído</td></tr>
+    <tr><td>Correr no teto em combate</td><td>Acrobacia</td><td class="d">10</td><td>Fica caído</td></tr>
+    <tr><td>Segurar alguém que está caindo</td><td>Atletismo</td><td class="d">14</td><td>Os dois caem</td></tr>
+    <tr><td>Cortar um arpéu preso</td><td>Ataque contra CA 12</td><td class="d">—</td><td>A corda aguenta mais uma rodada</td></tr>
+    <tr><td>Destravar a roda</td><td>Ferramentas</td><td class="d">15</td><td>Trava mais, perde 1 de Distância</td></tr>
+    <tr><td>Consertar algo grande da caravana</td><td>Ferramentas</td><td class="d">17</td><td>Funciona pela metade, quebra de novo depois</td></tr>
+    <tr><td>Resistir ao Cinza (por minuto)</td><td>Sabedoria</td><td class="d">15</td><td>Perde uma memória — você escolhe qual</td></tr>
+    <tr><td>Aguentar o nome dito por Um Que Voltou</td><td>Sabedoria</td><td class="d">13</td><td>Perde uma perícia até o descanso longo</td></tr>
+    <tr><td>Perceber que um morador está mentindo</td><td>Intuição</td><td class="d">14</td><td>Acredita, e você guarda a informação errada</td></tr>
+    <tr><td>Achar rastro na estrada</td><td>Sobrevivência</td><td class="d">13</td><td>Acha rastro velho e erra a direção</td></tr>
+    <tr><td>Negociar preço numa parada</td><td>Persuasão ou Enganação</td><td class="d">15</td><td>Preço sobe 25% em vez de cair</td></tr>
+    <tr><td>Acalmar a caravana em pânico</td><td>Persuasão</td><td class="d">16</td><td>Três moradores desertam na próxima parada</td></tr>
+    <tr><td>Identificar o que é Um Que Voltou</td><td>Arcanismo ou Religião</td><td class="d">15</td><td>Chuta errado com confiança</td></tr>
+    <tr><td>Cozinhar sob pressão pra 400</td><td>Ferramentas de cozinha</td><td class="d">14</td><td>Comida rende metade, moral cai</td></tr>
+    <tr><td>Lembrar de algo que o Cinza apagou</td><td>Só a Memorista</td><td class="d">—</td><td>Sem rolagem: ela lembra, e esquece outra coisa</td></tr>
+  </table>
+
+  <h3>Percepção passiva do grupo</h3>
+  <p>Use isso pra decidir <strong>quem nota sem precisar rolar</strong>. Confere com as fichas no nível 4 e anota aqui na primeira sessão.</p>
+  <table>
+    <tr><th>Personagem</th><th class="d">Passiva</th><th>Quem nota o quê</th></tr>
+    <tr><td>Irina</td><td class="d">15</td><td>A que mais enxerga. Dá as pistas visuais pra ela.</td></tr>
+    <tr><td>Zaira</td><td class="d">13</td><td>Nota o que está escondido de propósito</td></tr>
+    <tr><td>Silas</td><td class="d">13</td><td>Nota quando alguém está mentindo sobre dinheiro</td></tr>
+    <tr><td>Luiz</td><td class="d">15</td><td>Nota o que está quebrado ou prestes a quebrar</td></tr>
+    <tr><td>Thorgrim</td><td class="d">10</td><td>Não nota quase nada. Compensa em outra coisa.</td></tr>
+    
+  </table>
+  <div class="dica">Quando quiser dar uma pista sem parar a cena: "Irina, você repara em X." Sem rolagem, sem aviso. Passiva serve exatamente pra isso.</div>
+
+  <h3>Vantagem e desvantagem — quando dar de graça</h3>
+  <ul>
+    <li><strong>Vantagem:</strong> quando o jogador descreve <em>como</em> faz e a descrição é boa. Recompensa criatividade, não sorte.</li>
+    <li><strong>Vantagem:</strong> quando dois personagens colaboram na mesma tarefa.</li>
+    <li><strong>Desvantagem:</strong> ferido grave, sem luz, em cima da caravana em alta velocidade.</li>
+    <li><strong>Nunca dê os dois na mesma rolagem.</strong> Se tiver os dois, rola normal e pronto.</li>
+  </ul>
+
+  <h3>Rolagem de grupo</h3>
+  <p>Quando <strong>todos</strong> precisam passar por algo (atravessar poeira, se esconder, aguentar o Cinza): todo mundo rola, e se <strong>metade ou mais</strong> passar, o grupo passa. Com cinco jogadores, precisa de 3.</p>
+  <p>Isso evita o problema de uma falha travar sete pessoas.</p>
+
+  <h3>Crítico e falha</h3>
+  <p>20 natural: role o d10 de crítico na aba Mesa. 1 natural: role o d10 de falha.</p>
+  <div class="dica">No 20 natural, dá o microfone: <strong>"me descreve como você faz isso."</strong> É a melhor coisa que existe numa mesa e não custa nada.</div>
+
+  <h3>Quando NÃO rolar</h3>
+  <ul>
+    <li>Quando a falha só trava a cena e não cria nada.</li>
+    <li>Quando o personagem é obviamente competente naquilo — Mecânico apertando parafuso não rola.</li>
+    <li>Quando é o poder do cargo. Poder de cargo funciona, ponto.</li>
+    <li>Quando é informação que a mesa precisa pra sessão continuar.</li>
+  </ul>
+</section>
+
+<!-- ================= COMBATE ================= -->
+<section class="painel" id="combate">
+  <h2>Combate</h2>
+  <p class="subtitulo">Três tipos · manobras · crítico e falha</p>
+
+  <h3>1 · Combate no chão</h3>
+  <p>D&D normal. Descem da Andarilha e lutam. Use quando o grupo escolher parar.</p>
+
+  <h3>2 · Combate em movimento</h3>
+  <p>A luta acontece <strong>em cima da caravana andando</strong>. Regras extras:</p>
+  <ul>
+    <li>Terreno instável: quem correr mais que metade do deslocamento faz Acrobacia CD 10 ou fica caído.</li>
+    <li><strong>Cair do vagão:</strong> 2d6 de dano e você fica pra trás. Voltar custa uma rodada inteira e um teste de Atletismo CD 15 — ou alguém joga uma corda.</li>
+    <li>O Timoneiro pode gastar o poder <em>"vira!"</em> pra derrubar todo mundo que estiver no teto.</li>
+    <li>Inimigos entram pelas laterais, 2 por rodada, até serem cortados.</li>
+  </ul>
+
+  <h3>3 · Cerco</h3>
+  <p>Algo grande alcança a caravana. Cada jogador defende um <strong>setor diferente</strong> e você corta entre eles a cada rodada.</p>
+  <ul>
+    <li>Cada setor tem um objetivo próprio (segurar, evacuar, apagar fogo, consertar).</li>
+    <li>Um jogador pode abandonar o setor pra ajudar outro — e o setor abandonado sofre consequência.</li>
+    <li>Dura 4 rodadas fixas. No fim, conta quantos setores aguentaram.</li>
+  </ul>
+  <div class="dica">O cerco é o formato que faz mesa de sete funcionar. Ninguém espera a vez sem ter o que fazer.</div>
+
+  <h3>Manobras</h3>
+  <table>
+    <tr><th>Ação</th><th>Como funciona</th></tr>
+    <tr><td><strong>Derrubar</strong></td><td>Atletismo contra Atletismo ou Acrobacia. Alvo fica caído.</td></tr>
+    <tr><td><strong>Empurrar do vagão</strong></td><td>Atletismo CD 13. Só em combate em movimento. Devastador.</td></tr>
+    <tr><td><strong>Agarrar</strong></td><td>Atletismo contra. Alvo não se move.</td></tr>
+    <tr><td><strong>Cobrir aliado</strong></td><td>Reação: recebe o ataque no lugar de quem está a 1,5m.</td></tr>
+    <tr><td><strong>Mirar</strong></td><td>Abre mão do movimento: vantagem no próximo ataque.</td></tr>
+    <tr><td><strong>Improvisar</strong></td><td>Qualquer coisa que a cena permita. Rola d20, alto é bom.</td></tr>
+  </table>
+
+  <h3>Crítico · role d10 ao tirar 20 natural</h3>
+  <table>
+    <tr><th class="d">d10</th><th>Efeito extra</th></tr>
+    <tr><td class="d">1–2</td><td>Dano máximo em vez de rolar</td></tr>
+    <tr><td class="d">3</td><td>Alvo cai no chão</td></tr>
+    <tr><td class="d">4</td><td>Alvo é empurrado 3m — do vagão, se estiver na borda</td></tr>
+    <tr><td class="d">5</td><td>A arma do alvo voa longe</td></tr>
+    <tr><td class="d">6</td><td>Ataque extra imediato contra o mesmo alvo</td></tr>
+    <tr><td class="d">7</td><td>Alvo sangra: 1d6 no início de cada turno dele até ser tratado</td></tr>
+    <tr><td class="d">8</td><td>Alvo fica atordoado até o fim do próximo turno dele</td></tr>
+    <tr><td class="d">9</td><td>Um aliado seu ganha reação imediata pra atacar</td></tr>
+    <tr><td class="d">10</td><td>Você descreve como quiser. Vale tudo.</td></tr>
+  </table>
+
+  <h3>Falha crítica · role d10 ao tirar 1 natural</h3>
+  <div class="dica">Regra de ouro: falha crítica <strong>complica, não castiga</strong>. Nada aqui tira o turno de ninguém.</div>
+  <table>
+    <tr><th class="d">d10</th><th>Complicação</th></tr>
+    <tr><td class="d">1–3</td><td>Só erra feio. Descreve bonito e segue.</td></tr>
+    <tr><td class="d">4</td><td>Perde o equilíbrio: fica caído</td></tr>
+    <tr><td class="d">5</td><td>A arma escorrega 3m pra longe</td></tr>
+    <tr><td class="d">6</td><td>Acerta o cenário: quebra algo importante da caravana</td></tr>
+    <tr><td class="d">7</td><td>O inimigo ganha vantagem no próximo ataque contra você</td></tr>
+    <tr><td class="d">8</td><td>Você fica exposto: o próximo aliado que agir precisa te cobrir</td></tr>
+    <tr><td class="d">9</td><td>Barulho alto: chega mais 1 inimigo</td></tr>
+    <tr><td class="d">10</td><td>Acerta um aliado com metade do dano. Só se for engraçado.</td></tr>
+  </table>
+
+  <h3>Ferimento grave</h3>
+  <p>Quando alguém cai a 0 PV, em vez de só desmaiar, role d6 quando for estabilizado:</p>
+  <table>
+    <tr><th class="d">d6</th><th>Ferimento — some no próximo descanso longo</th></tr>
+    <tr><td class="d">1–2</td><td>Nada. Só o susto.</td></tr>
+    <tr><td class="d">3</td><td>Costela: desvantagem em Atletismo e Acrobacia</td></tr>
+    <tr><td class="d">4</td><td>Sangramento: metade dos Dados de Vida no descanso curto</td></tr>
+    <tr><td class="d">5</td><td>Perna: deslocamento reduzido à metade</td></tr>
+    <tr><td class="d">6</td><td>Cabeça: desvantagem na primeira rolagem de cada cena</td></tr>
+  </table>
+</section>
+
+<!-- ================= BESTIÁRIO ================= -->
+<section class="painel" id="bestiario">
+  <h2>Bestiário</h2>
+  <p class="subtitulo">Calibrado para 5 jogadores no nível 5</p>
+
+  <div class="dica">Com 5 jogadores no nível 5, luta padrão pede <strong>5 a 7 inimigos comuns</strong> ou <strong>1 chefe com o dobro de PV e 2 ações lendárias</strong>. Se acabar em 2 rodadas, foi fraca. Se passar de 5, corta PV escondido.</div>
+
+  <div class="ficha">
+    <h4>Um Que Voltou</h4>
+    <div class="papel">Comum · use de 4 a 8</div>
+    <div class="numeros"><span>CA 13</span><span>PV 32</span><span>Toque +5</span><span>2d6 psíquico</span></div>
+    <p>Gente que o Cinza apagou pela metade. Metade do rosto é papel em branco.</p>
+    <p><strong>Diz seu nome:</strong> como ação, fala o nome verdadeiro de um personagem. Resistência de Sabedoria CD 13 ou a pessoa <strong>esquece uma coisa</strong> — você escolhe qual, e ela perde o acesso a uma perícia até o próximo descanso longo.</p>
+    <p class="como">Eles não atacam pra matar. Atacam pra serem lembrados. Se alguém disser o nome deles de volta, param.</p>
+  </div>
+
+  <div class="ficha">
+    <h4>Cavaleiro da Poeira</h4>
+    <div class="papel">Saqueador montado · use de 5 a 8 · combate em movimento</div>
+    <div class="numeros"><span>CA 15</span><span>PV 38</span><span>Lança +6</span><span>1d12+3</span><span>Desl. 18m</span></div>
+    <p><strong>Investida:</strong> se percorrer 6m antes de atacar, +2d6 de dano.</p>
+    <p><strong>Gancho:</strong> em vez de atacar, joga um arpéu no vagão e sobe. Cortar a corda é uma ação.</p>
+    <p class="como">Não querem matar, querem <strong>roubar um vagão inteiro</strong>. Se conseguirem enganchar 3 arpéus, arrancam o vagão 31 e vão embora com 12 pessoas dentro.</p>
+  </div>
+
+  <div class="ficha">
+    <h4>A Coisa Debaixo da Estrada</h4>
+    <div class="papel">Chefe recorrente · aparece 3× antes de ser enfrentada</div>
+    <div class="numeros"><span>CA 16</span><span>PV 190</span><span>2 ataques +8</span><span>2d10+5</span><span>2 ações lendárias</span></div>
+    <p><strong>Submergir:</strong> some no solo e reaparece em qualquer lugar a até 30m no início do próximo turno.</p>
+    <p><strong>Engolir roda:</strong> ataca a Andarilha em vez de pessoas. Cada acerto tira 1 de Distância.</p>
+    <p><strong>Lendárias:</strong> mover-se sem provocar ataques, ou repetir um ataque com desvantagem.</p>
+    <p class="como">Sessões 2, 5 e 9: só o rastro, o barulho, o chão afundando. Só encara na 12. A mesa vai estar apavorada e é esse o ponto.</p>
+  </div>
+
+  <div class="ficha">
+    <h4>Capataz da Sanguessuga</h4>
+    <div class="papel">Mini-chefe · Temporada 3</div>
+    <div class="numeros"><span>CA 17</span><span>PV 120</span><span>3 ataques +8</span><span>1d10+4</span></div>
+    <p><strong>Chicote de contrato:</strong> alcance 6m, puxa o alvo 3m em direção a ele.</p>
+    <p><strong>Ordem:</strong> como ação bônus, um aliado dele age imediatamente fora do turno.</p>
+    <p class="como">Educado, profissional, chama todos de "colega". Está apenas cumprindo o acordo que o Silas assinou.</p>
+  </div>
+
+  <div class="ficha">
+    <h4>O Cinza</h4>
+    <div class="papel">NÃO É PRA LUTAR · é o relógio</div>
+    <div class="numeros"><span>CA —</span><span>PV —</span><span>sem combate</span></div>
+    <p>Quem fica exposto ao Cinza faz resistência de Sabedoria CD 15 por minuto. Falhou: perde uma memória de verdade — você escolhe uma coisa da ficha do jogador e ela deixa de existir.</p>
+    <p class="como">Nunca role iniciativa contra ele. Ele nunca perde. A tensão vem de saber disso.</p>
+  </div>
+</section>
+
+<!-- ================= CANTINA ================= -->
+<section class="painel" id="loja">
+  <h2>Cantina da Andarilha</h2>
+  <p class="subtitulo">Cardápio · toque pra somar a conta</p>
+
+  <div class="alerta"><strong>Os quatro frascos são raros.</strong> Vermelho, azul, âmbar e o fermento não aparecem em toda parada — role um d6 e só entram no cardápio com 5 ou 6. Comida comum tem sempre.</div>
+
+  <div class="alerta"><strong>A regra da mesa:</strong> o que está no cardápio existe de verdade. Comprar custa pregos no jogo, consumir de verdade ativa o efeito. Máximo de <strong>3 itens por pessoa por sessão</strong> — combina isso antes de começar.</div>
+
+  <h3>Frascos e bebidas</h3>
+  <div class="cardapio">
+    <div class="mitem" data-preco="25"><div class="mtxt"><span class="mnome">Frasco Vermelho</span><span class="mreal">poção de vida</span><span class="mef">Recupera <b>2d4+4 PV</b> na hora. Ação bônus pra beber.</span></div><span class="mpr">25</span></div>
+    <div class="mitem" data-preco="25"><div class="mtxt"><span class="mnome">Frasco Azul</span><span class="mreal">poção de mana</span><span class="mef">Recupera <b>um espaço de magia</b> de até 2º círculo. Uma vez por descanso longo.</span></div><span class="mpr">25</span></div>
+    <div class="mitem" data-preco="20"><div class="mtxt"><span class="mnome">Frasco Âmbar</span><span class="mreal">poção de força</span><span class="mef">Vantagem em <b>testes e rolagens de Força</b> por 1 hora. E você carrega o dobro de peso.</span></div><span class="mpr">20</span></div>
+    <div class="mitem" data-preco="14"><div class="mtxt"><span class="mnome">Fermento de Estrada</span><span class="mreal">kombucha</span><span class="mef">Remove <b>1 nível de exaustão</b> e você fica imune a veneno por 1 hora. Gosto horrível — é assim que se sabe que funciona.</span></div><span class="mpr">14</span></div>
+    <div class="mitem" data-preco="12"><div class="mtxt"><span class="mnome">Faísca</span><span class="mreal">energético em lata</span><span class="mef">No próximo turno: <b>+3m de deslocamento e uma ação bônus extra</b>. Uma vez por combate.</span></div><span class="mpr">12</span></div>
+  </div>
+
+  <h3>Comida</h3>
+  <div class="cardapio">
+    <div class="mitem" data-preco="6"><div class="mtxt"><span class="mnome">Maçã da Margem</span><span class="mreal">maçã verde</span><span class="mef">Recupera <b>1d6 PV</b>. A verde é a que cresce perto do Cinza — mais azeda, mais forte.</span></div><span class="mpr">6</span></div>
+    <div class="mitem" data-preco="5"><div class="mtxt"><span class="mnome">Maçã do Vagão</span><span class="mreal">maçã vermelha</span><span class="mef">Recupera <b>1d4 PV</b> e remove enjoo. A fruta mais comum da caravana.</span></div><span class="mpr">5</span></div>
+    <div class="mitem" data-preco="10"><div class="mtxt"><span class="mnome">Lasca de Ferro</span><span class="mreal">Snickers · caramelo macchiato</span><span class="mef"><b>+2 de dano</b> no próximo ataque que acertar.</span></div><span class="mpr">10</span></div>
+    <div class="mitem" data-preco="10"><div class="mtxt"><span class="mnome">Torrão de Estrada</span><span class="mreal">Snickers · pé de moleque</span><span class="mef"><b>PV temporários iguais ao seu nível.</b> Duram até o próximo descanso.</span></div><span class="mpr">10</span></div>
+    <div class="mitem" data-preco="10"><div class="mtxt"><span class="mnome">Osso Branco</span><span class="mreal">Snickers · branco</span><span class="mef">Remove <b>amedrontado</b> e devolve 1d6 PV.</span></div><span class="mpr">10</span></div>
+    <div class="mitem" data-preco="10"><div class="mtxt"><span class="mnome">Ferida Doce</span><span class="mreal">Snickers · morango</span><span class="mef">Estabiliza um aliado caído <b>sem teste</b>, se ele conseguir engolir.</span></div><span class="mpr">10</span></div>
+    <div class="mitem" data-preco="7"><div class="mtxt"><span class="mnome">Folha de Avelã</span><span class="mreal">wafer Nocciola</span><span class="mef">Recupera <b>1 Dado de Vida</b> na hora, sem descanso.</span></div><span class="mpr">7</span></div>
+    <div class="mitem" data-preco="6"><div class="mtxt"><span class="mnome">Bolacha de Bordo</span><span class="mreal">wafer Bauducco</span><span class="mef">Vantagem no <b>próximo teste de perícia</b>. Só um.</span></div><span class="mpr">6</span></div>
+    <div class="mitem" data-preco="8"><div class="mtxt"><span class="mnome">Barra de Poeira</span><span class="mreal">paçoca</span><span class="mef">Recupera <b>1d8 PV</b>. Esfarela e é a comida mais amada da Andarilha.</span></div><span class="mpr">8</span></div>
+    <div class="mitem" data-preco="9"><div class="mtxt"><span class="mnome">Ração da Manhã</span><span class="mreal">belVita maçã e canela</span><span class="mef">Conta como <b>refeição completa</b>: recupera 1 Dado de Vida e remove fome do dia.</span></div><span class="mpr">9</span></div>
+    <div class="mitem" data-preco="7"><div class="mtxt"><span class="mnome">Tijolo de Grão</span><span class="mreal">barra de cereal</span><span class="mef"><b>+1 de CA</b> até o fim da próxima cena de combate.</span></div><span class="mpr">7</span></div>
+    <div class="mitem" data-preco="8"><div class="mtxt"><span class="mnome">Placa Quebrada</span><span class="mreal">KitKat</span><span class="mef">Divide com outra pessoa: <b>as duas</b> ganham 1d6 PV. Sozinho não funciona.</span></div><span class="mpr">8</span></div>
+    <div class="mitem" data-preco="9"><div class="mtxt"><span class="mnome">Nó de Caramelo</span><span class="mreal">Chokito</span><span class="mef">Vantagem em <b>testes de Constituição</b> por 1 hora.</span></div><span class="mpr">9</span></div>
+    <div class="mitem" data-preco="8"><div class="mtxt"><span class="mnome">Carga</span><span class="mreal">Charge</span><span class="mef"><b>Rerrola um dado de dano</b> que você já rolou. Aceita o segundo, mesmo pior.</span></div><span class="mpr">8</span></div>
+    <div class="mitem" data-preco="8"><div class="mtxt"><span class="mnome">Coco do Poente</span><span class="mreal">Prestígio</span><span class="mef">Remove <b>1 nível de exaustão</b>.</span></div><span class="mpr">8</span></div>
+    <div class="mitem" data-preco="7"><div class="mtxt"><span class="mnome">Volta de Corda</span><span class="mreal">Lollo</span><span class="mef">Uma vez: <b>ignora terreno difícil</b> por um turno inteiro.</span></div><span class="mpr">7</span></div>
+    <div class="mitem" data-preco="8"><div class="mtxt"><span class="mnome">Cal de Vagão</span><span class="mreal">Galak</span><span class="mef">Vantagem no <b>próximo teste de resistência</b> contra o Cinza.</span></div><span class="mpr">8</span></div>
+    <div class="mitem" data-preco="15"><div class="mtxt"><span class="mnome">Pão do Cozinheiro</span><span class="mreal">torrada com presunto e cebola</span><span class="mef">Só o Panela serve. <b>PV temporários iguais ao nível</b> e vantagem numa rolagem à escolha. Uma vez por descanso longo.</span></div><span class="mpr">15</span></div>
+    <div class="mitem" data-preco="0"><div class="mtxt"><span class="mnome">Água do Poço</span><span class="mreal">água</span><span class="mef">Remove <b>1 nível de exaustão</b>, uma vez por sessão. Ninguém cobra por água na Andarilha.</span></div><span class="mpr">0</span></div>
+  </div>
+
+  <h3>Equipamento</h3>
+  <div class="cardapio">
+    <div class="mitem" data-preco="15"><div class="mtxt"><span class="mnome">Corda de arpéu</span><span class="mreal"></span><span class="mef">Voltar pra caravana sem teste, de qualquer distância.</span></div><span class="mpr">15</span></div>
+    <div class="mitem" data-preco="10"><div class="mtxt"><span class="mnome">Lampião de óleo</span><span class="mreal"></span><span class="mef">Luz de 9m por 6 horas.</span></div><span class="mpr">10</span></div>
+    <div class="mitem" data-preco="20"><div class="mtxt"><span class="mnome">Máscara de poeira</span><span class="mreal"></span><span class="mef">+2 na resistência contra o Cinza.</span></div><span class="mpr">20</span></div>
+    <div class="mitem" data-preco="40"><div class="mtxt"><span class="mnome">Bússola de roda</span><span class="mreal"></span><span class="mef">Sempre sabe a distância exata até o Cinza.</span></div><span class="mpr">40</span></div>
+    <div class="mitem" data-preco="35"><div class="mtxt"><span class="mnome">Rede de vagão</span><span class="mreal"></span><span class="mef">Quem cai fica pendurado em vez de cair de vez.</span></div><span class="mpr">35</span></div>
+    <div class="mitem" data-preco="30"><div class="mtxt"><span class="mnome">Óleo de eixo</span><span class="mreal"></span><span class="mef">+1 de Distância, uma vez.</span></div><span class="mpr">30</span></div>
+    <div class="mitem" data-preco="25"><div class="mtxt"><span class="mnome">Caderno do Memorista</span><span class="mreal"></span><span class="mef">Guarda uma memória fora da cabeça. Pode ser lida por outra pessoa.</span></div><span class="mpr">25</span></div>
+    <div class="mitem" data-preco="50"><div class="mtxt"><span class="mnome">Poção de cura</span><span class="mreal"></span><span class="mef">2d4+2 PV.</span></div><span class="mpr">50</span></div>
+    <div class="mitem" data-preco="80"><div class="mtxt"><span class="mnome">Carta de passagem</span><span class="mreal"></span><span class="mef">Entrada garantida em qualquer parada, sem negociar.</span></div><span class="mpr">80</span></div>
+    <div class="mitem" data-preco="100"><div class="mtxt"><span class="mnome">Peça de reposição</span><span class="mreal"></span><span class="mef">O Mecânico remenda sem gastar cena nem teste.</span></div><span class="mpr">100</span></div>
+  </div>
+
+  <h3>Só uma vez</h3>
+  <div class="cardapio">
+    <div class="mitem" data-preco="200"><div class="mtxt"><span class="mnome">O Prego Torto</span><span class="mreal">Poço Torto · sessão 2</span><span class="mef">Segurando ele, você lembra de uma coisa que o Cinza apagou. Uma vez, e você não escolhe qual.</span></div><span class="mpr">200</span></div>
+    <div class="mitem" data-preco="150"><div class="mtxt"><span class="mnome">Corrente Curta</span><span class="mreal">Âncora · temporada 2</span><span class="mef">Não pode ser empurrado nem cair. Também não pode se mover mais de 3m.</span></div><span class="mpr">150</span></div>
+    <div class="mitem" data-preco="300"><div class="mtxt"><span class="mnome">Vidro de Silêncio</span><span class="mreal">a Sanguessuga · temporada 3</span><span class="mef">Quebre e nada num raio de 9m faz som por 1 minuto. Inclusive vocês.</span></div><span class="mpr">300</span></div>
+  </div>
+
+  <div class="conta">
+    <span>Conta do Contramestre</span>
+    <span><b id="total-conta">0</b> pregos <button id="zerar-conta">Zerar</button></span>
+  </div>
+
+  <h3>Como usar na mesa</h3>
+  <ul>
+    <li>O <strong>Silas</strong> controla o cofre. Ninguém compra sem passar por ele.</li>
+    <li>O <strong>Panela</strong> serve, e é NPC. Você decide o que tem hoje; o Contramestre decide o que o grupo banca.</li>
+    <li>Toque nos itens pra somar. É a conta da parada inteira, não de uma pessoa.</li>
+    <li>Nem tudo está disponível em toda parada. Você decide o que a Cantina tem hoje — role um d6 e é esse o número de itens de comida disponíveis.</li>
+  </ul>
+
+  <h3>Quanto o grupo ganha</h3>
+  <table>
+    <tr><th>Serviço</th><th class="pr">Pregos</th></tr>
+    <tr><td>Resolver um problema da caravana</td><td class="pr">40</td></tr>
+    <tr><td>Escoltar uma parada até a próxima</td><td class="pr">80</td></tr>
+    <tr><td>Recuperar algo perdido na estrada</td><td class="pr">60</td></tr>
+    <tr><td>Sessão sem perder Distância</td><td class="pr">25</td></tr>
+    <tr><td>Salvar um morador com nome próprio</td><td class="pr">50</td></tr>
+  </table>
+</section>
+
+<!-- ================= IMPROVISO ================= -->
+<section class="painel" id="improviso">
+  <h2>Improviso</h2>
+  <p class="subtitulo">Material solto pra puxar na hora</p>
+
+  <div class="sorteio">
+    <h3 style="margin-top:0">Acontecimento de estrada</h3>
+    <button class="btn" data-tabela="estrada">Sortear</button>
+    <div class="resultado" id="res-estrada">Nada ainda.</div>
+  </div>
+
+  <div class="sorteio">
+    <h3 style="margin-top:0">Morador da Andarilha</h3>
+    <button class="btn" data-tabela="gente">Sortear</button>
+    <div class="resultado" id="res-gente">Nada ainda.</div>
+  </div>
+
+  <div class="sorteio">
+    <h3 style="margin-top:0">Conversa de fogueira</h3>
+    <button class="btn" data-tabela="fogueira">Sortear</button>
+    <div class="resultado" id="res-fogueira">Nada ainda.</div>
+  </div>
+
+  <div class="dica">Sorteou, aparece o botão de narrar embaixo — já na voz certa se o texto citar um NPC conhecido. Cada sorteio gera uma vez e fica em cache.</div>
+
+  <h3>Perguntas que eles vão fazer</h3>
+  <details class="bloco"><summary>De onde veio o Cinza?</summary><div class="corpo">
+    <p>Ninguém sabe. As três versões que circulam: castigo de deus, doença do mundo, ou alguém que fez alguma coisa errada há muito tempo. <em>A terceira é a certa.</em></p>
+  </div></details>
+  <details class="bloco"><summary>Por que a caravana não pode parar?</summary><div class="corpo">
+    <p>Porque o Cinza anda a uma velocidade constante e a Andarilha anda um pouco mais rápido. Seis horas é a margem. Não é magia, é aritmética.</p>
+  </div></details>
+  <details class="bloco"><summary>Quem construiu a Andarilha?</summary><div class="corpo">
+    <p>Ninguém lembra. O nome do construtor está numa placa no vagão 1, e a placa foi lixada. <em>Alguém lixou de propósito.</em></p>
+  </div></details>
+  <details class="bloco"><summary>Dá pra matar o Cinza?</summary><div class="corpo">
+    <p>Ninguém tentou e voltou. Mas o que a Zaira sabe, e não contou, é que dá pra entrar e sair.</p>
+  </div></details>
+  <details class="bloco"><summary>Quantas caravanas existem?</summary><div class="corpo">
+    <p>Sabidas: onze. Vivas: cinco. Maior que a Andarilha: uma só.</p>
+  </div></details>
+
+  <h3>Falas dos NPCs fixos</h3>
+  <details class="bloco"><summary>Velha Corda · a mais antiga a bordo</summary><div class="corpo">
+    <p>Noventa anos, cega de um olho, conserta rede. Fala pouco e sempre no meio de uma frase que ninguém começou.</p>
+    <p><em>— Essa curva eu já fiz. Não me pergunta quando.</em></p>
+    <p><em>— Quando eu era nova, o mundo era maior. Não é saudade, é medida.</em></p>
+  </div></details>
+  <details class="bloco"><summary>Tenso · garoto de 11 anos</summary><div class="corpo">
+    <p>Corre pelos vagões levando recado. Sabe de tudo antes de todo mundo. Cobra em bala.</p>
+    <p><em>— Eu vi. Eu não devia ter visto, mas eu vi.</em></p>
+    <p><em>— Se eu contar, você me dá o quê?</em></p>
+  </div></details>
+  <details class="bloco"><summary>Mestra Vago · chefe dos vagões</summary><div class="corpo">
+    <p>Manda na parte administrativa. Não gosta da tripulação de vocês porque vocês resolvem as coisas quebrando.</p>
+    <p><em>— Isso vai no relatório. Sim, existe relatório.</em></p>
+    <p><em>— Quatrocentas pessoas. Eu penso nas quatrocentas. Vocês pensam nas cinco de vocês.</em></p>
+  </div></details>
+  <details class="bloco"><summary>O Clandestino · o segredo do vagão 39</summary><div class="corpo">
+    <p class="spoiler">Vive no vagão 39, atrás das caixas. Não dorme, não sangra, e não envelhece desde que voltou do Cinza. É o paciente da Irina e o alimentado do Panela — nenhum dos dois sabe do outro.</p>
+    <p><em>— Eu lembro de você. Você ainda não me conheceu, mas eu lembro.</em></p>
+  </div></details>
+</section>
+
+<!-- ================= MESA ================= -->
+<section class="painel" id="mesa">
+  <h2>Mesa</h2>
+  <p class="subtitulo">Ferramentas de combate</p>
+
+  <div class="sorteio">
+    <h3 style="margin-top:0">Ordem de iniciativa</h3>
+    <div class="campos">
+      <input id="nome-comb" type="text" placeholder="Nome" autocomplete="off">
+      <input id="ini-comb" class="curto" type="number" inputmode="numeric" placeholder="Ini">
+      <input id="pv-comb" class="curto" type="number" inputmode="numeric" placeholder="PV">
+    </div>
+    <button class="btn" id="add-comb">Adicionar</button>
+    <div id="lista-comb" style="margin-top:14px"></div>
+    <button class="btn sec" id="limpar-comb" style="margin-top:10px">Limpar tudo</button>
+    <div class="dica" style="margin-bottom:0">Pra aplicar dano, digita no campinho e aperta Enter.</div>
+  </div>
+
+  <div class="sorteio">
+    <h3 style="margin-top:0">Rolar d20</h3>
+    <button class="btn" data-rolar="d20">Rolar</button>
+    <div class="resultado" id="res-d20">Nada ainda.</div>
+  </div>
+
+  <div class="sorteio">
+    <h3 style="margin-top:0">Crítico · d10</h3>
+    <button class="btn" data-tabela="critico">Rolar crítico</button>
+    <div class="resultado" id="res-critico">Nada ainda.</div>
+  </div>
+
+  <div class="sorteio">
+    <h3 style="margin-top:0">Falha crítica · d10</h3>
+    <button class="btn" data-tabela="falha">Rolar falha</button>
+    <div class="resultado" id="res-falha">Nada ainda.</div>
+  </div>
+
+  <h3>Sobrevivência com 5 jogadores</h3>
+  <ul>
+    <li><strong>Turno de 30 segundos.</strong> Avisa antes: pensou no seu turno enquanto os outros jogam.</li>
+    <li><strong>Chama pelo nome.</strong> Sempre vai ter dois calados. Pergunta direto.</li>
+    <li><strong>Usa os cargos.</strong> Quando travar, pergunta pro cargo certo: "Mecânico, dá pra consertar?"</li>
+    <li><strong>Cerco quando cansar.</strong> Se a mesa dispersar, joga um cerco: cinco frentes, ninguém parado.</li>
+    <li><strong>Distância na mesa.</strong> Deixa o número de 10 a 0 visível o tempo todo. É a tensão de graça.</li>
+  </ul>
+</section>
+
+</div>
+
+<script>
+/* ---------- persistência ---------- */
+const CHAVE='andarilha-v1';
+let ESTADO={passos:[],itens:[],comb:[],dist:8,aba:'mundo'};
+const txtSalvo=document.getElementById('txt-salvo');
+
+function carregar(){
+  try{
+    const cru=localStorage.getItem(CHAVE);
+    if(cru) ESTADO=Object.assign(ESTADO,JSON.parse(cru));
+    return !!cru;
+  }catch(e){ return false; }
+}
+const tinha=carregar();
+let temSalvamento=true;
+function salvar(){
+  try{
+    localStorage.setItem(CHAVE,JSON.stringify(ESTADO));
+    const h=new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+    txtSalvo.textContent='salvo neste aparelho · '+h;
+  }catch(e){
+    temSalvamento=false;
+    txtSalvo.textContent='sem salvamento aqui — anota no papel';
+  }
+}
+
+const TABELAS={
+ estrada:[
+  "Uma carroça abandonada no meio da estrada, ainda quente. Ninguém dentro.",
+  "Chuva de poeira por 3 horas. Ninguém enxerga a 3 metros.",
+  "Um cachorro corre ao lado da caravana por dois dias antes de alguém deixar ele subir.",
+  "Encontram um marco de pedra com a distância até uma cidade que não existe mais.",
+  "Um dos vagões começa a cheirar mal e ninguém assume a responsabilidade.",
+  "Uma família a pé pede pra subir. São seis. Cabe três.",
+  "O eixo do vagão 8 range de um jeito novo. O Mecânico sabe o que significa.",
+  "Aparece outra caravana no horizonte, parada. Quando chegam perto, está vazia e arrumada.",
+  "Uma tempestade obriga a parar 5 horas. Falta uma hora pro limite.",
+  "Alguém pintou um símbolo no vagão 22 durante a noite.",
+  "Um pássaro voando pro leste. Pro leste. Ninguém vai pro leste.",
+  "A água do tanque 3 amanhece salgada."
+ ],
+ gente:[
+  "Bico — carpinteiro, fala sozinho, sabe o nome de todos os 40 vagões.",
+  "Dona Fia — costura tudo da caravana e cobra em segredos, não em pregos.",
+  "Os Irmãos Rala — dois gêmeos que discutem há 20 anos sobre qual é o mais velho.",
+  "Sete — chamam ele assim porque é o que sobrou de uma família de sete.",
+  "Marcela Roda — puxa o primeiro vagão. Não fala com ninguém há três anos.",
+  "Padre Sem Deus — dá conforto a quem vai morrer e não acredita em nada.",
+  "Quina — menina de 15 anos que quer ser Batedora e segue a Zaira em silêncio.",
+  "Velho Trilho — jura que já viu o mar. Ninguém acredita. Ele viu."
+ ],
+ fogueira:[
+  "Alguém pergunta qual foi a última coisa boa que aconteceu. O silêncio dura demais.",
+  "Discussão sobre se vale a pena ter filho num mundo assim. Dois lados, ambos com razão.",
+  "Um morador pede pro grupo contar como foi lá fora. Quer detalhe, quer cor, quer cheiro.",
+  "Alguém canta. Ninguém lembra de onde é a música.",
+  "Uma aposta boba vira briga séria em cinco minutos.",
+  "Um morador confessa que já tentou olhar pra trás de propósito.",
+  "Perguntam pro grupo: se a caravana tivesse que abandonar um vagão, qual seria?",
+  "Alguém agradece a um dos personagens por algo que ele nem lembra de ter feito."
+ ],
+ critico:[
+  "Dano máximo, sem rolar.","Dano máximo, sem rolar.","O alvo cai no chão.",
+  "O alvo é empurrado 3m — do vagão, se estiver na borda.","A arma do alvo voa longe.",
+  "Ataque extra imediato contra o mesmo alvo.","O alvo sangra: 1d6 no início de cada turno dele.",
+  "O alvo fica atordoado até o fim do próximo turno dele.",
+  "Um aliado ganha reação imediata pra atacar.","Você descreve como quiser. Vale tudo."
+ ],
+ falha:[
+  "Só erra feio. Descreve bonito e segue.","Só erra feio. Descreve bonito e segue.",
+  "Só erra feio. Descreve bonito e segue.","Perde o equilíbrio: fica caído.",
+  "A arma escorrega 3m pra longe.","Acerta o cenário e quebra algo da caravana.",
+  "O inimigo ganha vantagem no próximo ataque contra você.",
+  "Você fica exposto: o próximo aliado precisa te cobrir.",
+  "Barulho alto: chega mais 1 inimigo.","Acerta um aliado com metade do dano. Só se for engraçado."
+ ]
+};
+
+const tabs=document.querySelectorAll('.tab');
+tabs.forEach(t=>t.addEventListener('click',()=>{
+  tabs.forEach(o=>o.setAttribute('aria-selected','false'));
+  t.setAttribute('aria-selected','true');
+  document.querySelectorAll('.painel').forEach(p=>p.classList.remove('ativo'));
+  document.getElementById(t.dataset.alvo).classList.add('ativo');
+  ESTADO.aba=t.dataset.alvo; salvar();
+  window.scrollTo({top:0,behavior:'smooth'});
+}));
+
+document.querySelectorAll('.agenda').forEach(a=>a.addEventListener('click',()=>a.classList.toggle('lacrada')));
+document.querySelectorAll('.passo').forEach(x=>{
+  const n=x.querySelector('.n');
+  const id=n?n.textContent.trim():null;
+  if(id && ESTADO.passos.indexOf(id)>=0) x.classList.add('feito');
+  x.addEventListener('click',()=>{
+    x.classList.toggle('feito');
+    if(id){
+      const i=ESTADO.passos.indexOf(id);
+      if(x.classList.contains('feito')){ if(i<0) ESTADO.passos.push(id); }
+      else if(i>=0) ESTADO.passos.splice(i,1);
+      salvar();
+    }
+    if(navigator.vibrate)navigator.vibrate(15);
+  });
+});
+
+document.querySelector('[data-rolar="d20"]').addEventListener('click',()=>{
+  const n=Math.floor(Math.random()*20)+1, alvo=document.getElementById('res-d20');
+  let x='&nbsp;';
+  if(n===20) x='— crítico. Rola o d10 abaixo.';
+  if(n===1) x='— falha. Rola o d10 abaixo.';
+  alvo.innerHTML='<span class="d20">'+n+'</span><span style="margin-left:12px">'+x+'</span>';
+  alvo.classList.add('tem');
+  if(navigator.vibrate) navigator.vibrate(20);
+});
+
+/* botão de narrar que aparece junto do sorteio */
+const btNarrarSorteio={};
+['estrada','gente','fogueira'].forEach(k=>{
+  const alvo=document.getElementById('res-'+k);
+  if(!alvo) return;
+  const b=document.createElement('button');
+  b.className='bnarr'; b.textContent='▶ Narrar'; b.dataset.estado='ocioso'; b.style.display='none';
+  alvo.parentNode.insertBefore(b,alvo.nextSibling);
+  b.addEventListener('click',()=>{
+    const e=b.dataset.estado;
+    if(e==='tocando'){ pausar(b); return; }
+    if(e==='pausado'){ retomar(b); return; }
+    if(e==='gerando') return;
+    const txt=b.dataset.texto||'';
+    if(!txt) return;
+    const chave=vozDaFala(txt,'');
+    b.dataset.rotulo='▶ '+(VOZES[chave]?VOZES[chave].rotulo:'Narrar');
+    narrar('imp-'+k+'-'+b.dataset.idx,txt,b,idDaVoz(chave));
+  });
+  btNarrarSorteio[k]=b;
+});
+
+document.querySelectorAll('[data-tabela]').forEach(b=>b.addEventListener('click',()=>{
+  const k=b.dataset.tabela, l=TABELAS[k], i=Math.floor(Math.random()*l.length);
+  const alvo=document.getElementById('res-'+k);
+  alvo.textContent=(i+1)+'. '+l[i];
+  alvo.classList.add('tem');
+  const bn=btNarrarSorteio[k];
+  if(bn){
+    pararAtual();
+    bn.dataset.texto=l[i];
+    bn.dataset.idx=i;
+    const chave=vozDaFala(l[i],'');
+    bn.dataset.rotulo='▶ '+(VOZES[chave]?VOZES[chave].rotulo:'Narrar');
+    bn.dataset.pronto='';
+    bn.dataset.estado='ocioso';
+    bn.textContent=bn.dataset.rotulo;
+    bn.style.display='block';
+  }
+  if(navigator.vibrate) navigator.vibrate(20);
+}));
+
+
+const mitens=document.querySelectorAll('.mitem');
+const totalEl=document.getElementById('total-conta');
+function somar(){
+  let t=0;
+  document.querySelectorAll('.mitem.sel').forEach(m=>t+=parseInt(m.dataset.preco,10)||0);
+  totalEl.textContent=t;
+}
+mitens.forEach((m,idx)=>{
+  if(ESTADO.itens.indexOf(idx)>=0) m.classList.add('sel');
+  m.addEventListener('click',()=>{
+    m.classList.toggle('sel');
+    const i=ESTADO.itens.indexOf(idx);
+    if(m.classList.contains('sel')){ if(i<0) ESTADO.itens.push(idx); }
+    else if(i>=0) ESTADO.itens.splice(i,1);
+    somar(); salvar();
+    if(navigator.vibrate)navigator.vibrate(12);
+  });
+});
+somar();
+document.getElementById('zerar-conta').addEventListener('click',e=>{
+  e.stopPropagation();
+  document.querySelectorAll('.mitem.sel').forEach(m=>m.classList.remove('sel'));
+  ESTADO.itens=[]; somar(); salvar();});
+
+let combatentes=ESTADO.comb||[];
+const lista=document.getElementById('lista-comb');
+function desenhar(){
+  lista.innerHTML='';
+  combatentes.sort((a,b)=>b.ini-a.ini);
+  combatentes.forEach((c,idx)=>{
+    const d=document.createElement('div');
+    d.className='linha-comb'+(c.pv!==null&&c.pv<=0?' morto':'');
+    const i=document.createElement('span');i.className='ini';i.textContent=c.ini;
+    const n=document.createElement('span');n.className='nom';n.textContent=c.nome;
+    d.appendChild(i);d.appendChild(n);
+    if(c.pv!==null){
+      const p=document.createElement('span');p.className='pv';p.textContent=c.pv+' pv';
+      const dn=document.createElement('input');
+      dn.className='dano';dn.type='number';dn.inputMode='numeric';dn.placeholder='dano';
+      dn.addEventListener('keydown',ev=>{
+        if(ev.key==='Enter'){const v=parseInt(dn.value,10);
+          if(!isNaN(v)){combatentes[idx].pv-=v;dn.value='';desenhar();persistirComb();}}
+      });
+      d.appendChild(p);d.appendChild(dn);
+    }
+    const x=document.createElement('button');x.className='x';x.textContent='×';
+    x.addEventListener('click',()=>{combatentes.splice(idx,1);desenhar();persistirComb();});
+    d.appendChild(x);lista.appendChild(d);
+  });
+}
+document.getElementById('add-comb').addEventListener('click',()=>{
+  const n=document.getElementById('nome-comb'),i=document.getElementById('ini-comb'),p=document.getElementById('pv-comb');
+  if(!n.value.trim())return;
+  combatentes.push({nome:n.value.trim(),ini:parseInt(i.value,10)||0,pv:p.value===''?null:(parseInt(p.value,10)||0)});
+  n.value='';i.value='';p.value='';n.focus();desenhar();persistirComb();
+});
+document.getElementById('limpar-comb').addEventListener('click',()=>{combatentes=[];desenhar();persistirComb();});
+function persistirComb(){ ESTADO.comb=combatentes; salvar(); }
+
+/* ---------- elenco de vozes ---------- */
+const VOZES={
+  narrador:{id:'Df0A8fHl2LOO7kDNIlpg',rotulo:"Narrador de cena"},
+  epico:{id:'Bz3xOImr0NCCz7YRPW4s',rotulo:"Narrador do mundo"},
+  cinza:{id:'jdrqQ2ZMWENd1cuRByWG',rotulo:"Sussurro"},
+  clandestino:{id:'RGbeQtiShYRDVCrd9b9w',rotulo:"O Clandestino"},
+  bandeira:{id:'MgqVq3OCTPeVHCEDr4HU',rotulo:"Bandeira"},
+  vago:{id:'6p0P6gezgvY1v6xbLzmU',rotulo:"Mestra Vago"},
+  corda:{id:'KFcKSkKkWqMVhCbLkuvh',rotulo:"Velha Corda"},
+  trilho:{id:'KFngny3CPdDkcmlKEUlK',rotulo:"Velho Trilho"},
+  prefeito:{id:'2HmIg4yvRgcH2ZDgiwGz',rotulo:"O Prefeito de Âncora"},
+  capataz:{id:'0pkdtmrxitYBWv6q9NJO',rotulo:"Capataz da Sanguessuga"},
+  vendedor:{id:'B52raBK48m23qWYbwchQ',rotulo:"O vendedor da Cantina"},
+  coisa:{id:'BNgbHR0DNeZixGQVzloa',rotulo:"A Coisa e as criaturas grandes"},
+  crianca:{id:'bICR68fw9p7rUiAEAgn6',rotulo:"A Criança que Voltou"},
+};
+
+/* ordem importa: a primeira regra que casar vence */
+const REGRAS=[
+  [/Bandeira|quantos nomes você já esqueceu|poço aqui não dá água|uma pessoa lá fora esquece/i,'bandeira'],
+  [/Mestra Vago|vai no relatório|Quatrocentas pessoas\. Eu penso/i,'vago'],
+  [/Velha Corda|Essa curva eu já fiz/i,'corda'],
+  [/Velho Trilho|já viu o mar/i,'trilho'],
+  [/Prefeito|Âncora só recebe/i,'prefeito'],
+  [/Capataz|Sanguessuga|colega/i,'capataz'],
+  [/Cantina|pregos o caldo|preço de amigo/i,'vendedor'],
+  [/Clandestino|Nóis|não dorme/i,'clandestino'],
+  [/Nóis|não dorme|Eu lembro de você/i,'clandestino'],
+  [/Criança que Voltou|\bQuina\b|Tenso\b|Eu voltei/,'crianca'],
+  [/Coisa Debaixo|tremor|chão embaixo da estrada|enorme/i,'coisa'],
+];
+
+function vozDaFala(txt,painel){
+  for(const [re,k] of REGRAS){ if(re.test(txt)) return k; }
+  if(painel==='mundo'||painel==='adiante') return 'epico';
+  return 'narrador';
+}
+
+function idDaVoz(k){
+  const c=lerCred();
+  if(k==='narrador' && c.voz) return c.voz;          /* respeita o campo manual */
+  if(c.vozFem && (k==='bandeira'||k==='corda'||k==='vago')) return c.vozFem;
+  return (VOZES[k]||VOZES.narrador).id;
+}
+
+/* ---------- narração ---------- */
+const CHAVE_VOZ='andarilha-voz';
+const inpKey=document.getElementById('api-key');
+const inpVoz=document.getElementById('voz-id');
+const estadoVoz=document.getElementById('estado-voz');
+const cacheAudio={};
+let tocandoAgora=null;
+
+function lerCred(){
+  try{
+    const c=JSON.parse(localStorage.getItem(CHAVE_VOZ))||{};
+    if(c.voz==='jkiD8IhCU1i2V7VvmNwi') c.voz='';   /* migra quem salvou a voz antiga */
+    return c;
+  }catch(e){ return {}; }
+}
+const inpVozFem=document.getElementById('voz-fem');
+function pintarCred(){
+  const c=lerCred();
+  if(c.key){ inpKey.value=c.key; }
+  inpVoz.value=c.voz||'Df0A8fHl2LOO7kDNIlpg';
+  inpVozFem.value=c.vozFem||'';
+  document.getElementById('estab').value = (c.estab!==undefined && c.estab!=='') ? c.estab : '0';
+  document.getElementById('ptbr').checked = (c.ptbr===undefined) ? true : !!c.ptbr;
+  estadoVoz.textContent=c.key?'chave guardada neste aparelho':'sem chave — usando a voz do tablet';
+}
+document.getElementById('salvar-chave').addEventListener('click',()=>{
+  const k=inpKey.value.trim(), v=inpVoz.value.trim()||'Df0A8fHl2LOO7kDNIlpg';
+  const vf=inpVozFem.value.trim();
+  const est=document.getElementById('estab').value;
+  const br=document.getElementById('ptbr').checked;
+  try{
+    localStorage.setItem(CHAVE_VOZ,JSON.stringify({key:k,voz:v,vozFem:vf,estab:est,ptbr:br}));
+    estadoVoz.textContent=k?'chave guardada neste aparelho':'chave removida — usando a voz do tablet';
+  }catch(e){ estadoVoz.textContent='este navegador não deixa guardar. A chave vale só nesta aba.'; }
+});
+
+let atual=null;   /* {tipo, audio, botao} */
+
+function rotuloOcioso(b){
+  const base=b.dataset.rotulo||'▶ Narrar';
+  return b.dataset.pronto==='1' ? base+' ✓' : base;
+}
+function ocioso(b){ b.disabled=false; b.dataset.estado='ocioso'; b.textContent=rotuloOcioso(b); }
+
+function pararAtual(){
+  if(!atual) return;
+  if(atual.tipo==='audio' && atual.audio){ atual.audio.pause(); atual.audio.currentTime=0; }
+  if(atual.tipo==='voz' && 'speechSynthesis' in window) window.speechSynthesis.cancel();
+  ocioso(atual.botao);
+  atual=null;
+}
+
+function pausar(botao){
+  if(!atual) return;
+  if(atual.tipo==='audio' && atual.audio) atual.audio.pause();
+  if(atual.tipo==='voz' && 'speechSynthesis' in window) window.speechSynthesis.pause();
+  botao.dataset.estado='pausado';
+  botao.textContent='▶ Continuar';
+}
+
+function retomar(botao){
+  if(!atual) return;
+  if(atual.tipo==='audio' && atual.audio) atual.audio.play();
+  if(atual.tipo==='voz' && 'speechSynthesis' in window) window.speechSynthesis.resume();
+  botao.dataset.estado='tocando';
+  botao.textContent='⏸ Pausar';
+}
+
+function falarNoTablet(txt,botao){
+  if(!('speechSynthesis' in window)){
+    estadoVoz.textContent='este aparelho não tem leitura de voz.';
+    ocioso(botao); return;
+  }
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(txt);
+  u.lang='pt-BR'; u.rate=0.9; u.pitch=0.8;
+  u.onend=()=>{ atual=null; ocioso(botao); };
+  u.onerror=()=>{ atual=null; ocioso(botao); };
+  atual={tipo:'voz',audio:null,botao:botao};
+  botao.disabled=false;
+  botao.dataset.estado='tocando';
+  botao.textContent='⏸ Pausar';
+  window.speechSynthesis.speak(u);
+}
+
+function tocarBlob(url,botao){
+  const a=new Audio(url);
+  atual={tipo:'audio',audio:a,botao:botao};
+  botao.disabled=false;
+  botao.dataset.estado='tocando';
+  botao.textContent='⏸ Pausar';
+  a.onended=()=>{ atual=null; ocioso(botao); };
+  a.onerror=()=>{ atual=null; ocioso(botao); estadoVoz.textContent='não consegui tocar esse áudio.'; };
+  a.play();
+}
+
+async function narrar(idx,txt,botao,vozForcada){
+  pararAtual();
+
+  if(cacheAudio[idx]){ tocarBlob(cacheAudio[idx],botao); return; }
+
+  const c=lerCred();
+  if(!c.key){ falarNoTablet(txt,botao); return; }
+
+  botao.disabled=true;
+  botao.dataset.estado='gerando';
+  botao.textContent='gerando…';
+  try{
+    const voz=vozForcada||c.voz||'Df0A8fHl2LOO7kDNIlpg';
+    const est=parseFloat(c.estab!==undefined&&c.estab!==''?c.estab:'0');
+    const usaBR = (c.ptbr===undefined) ? true : !!c.ptbr;
+    const textoFinal = usaBR ? '[strong Brazilian Portuguese accent] '+txt : txt;
+    async function pedir(modelo){
+      const corpo={text:textoFinal,model_id:modelo,
+        voice_settings:{stability:est,similarity_boost:0.75,use_speaker_boost:true}};
+      if(usaBR) corpo.language_code='pt';
+      return fetch('https://api.elevenlabs.io/v1/text-to-speech/'+voz,{
+        method:'POST',
+        headers:{'xi-api-key':c.key,'Content-Type':'application/json','Accept':'audio/mpeg'},
+        body:JSON.stringify(corpo)
+      });
+    }
+    let r=await pedir('eleven_v3');
+    if(!r.ok && r.status===400 && usaBR){
+      /* algumas vozes recusam language_code — tenta só com a marcação de sotaque */
+      const semCodigo=await fetch('https://api.elevenlabs.io/v1/text-to-speech/'+voz,{
+        method:'POST',
+        headers:{'xi-api-key':c.key,'Content-Type':'application/json','Accept':'audio/mpeg'},
+        body:JSON.stringify({text:textoFinal,model_id:'eleven_v3',
+          voice_settings:{stability:est,similarity_boost:0.75,use_speaker_boost:true}})
+      });
+      if(semCodigo.ok) r=semCodigo;
+    }
+    if(!r.ok && (r.status===400||r.status===403||r.status===404||r.status===422)){
+      estadoVoz.textContent='Eleven v3 indisponível nesta conta · usando multilingual v2';
+      r=await pedir('eleven_multilingual_v2');
+    }
+    if(!r.ok){
+      let msg='erro '+r.status;
+      if(r.status===401) msg='chave inválida ou sem crédito';
+      if(r.status===422) msg='voz não encontrada — confira o ID';
+      if(r.status===429) msg='limite atingido, espera um pouco';
+      estadoVoz.textContent=msg+' · usando a voz do tablet';
+      falarNoTablet(txt,botao); return;
+    }
+    const blob=await r.blob();
+    const url=URL.createObjectURL(blob);
+    cacheAudio[idx]=url;
+    botao.dataset.pronto='1';
+    estadoVoz.textContent='gerado e guardado até fechar a página';
+    tocarBlob(url,botao);
+  }catch(e){
+    estadoVoz.textContent='sem conexão com a ElevenLabs · usando a voz do tablet';
+    falarNoTablet(txt,botao);
+  }
+}
+
+document.querySelectorAll('.narr').forEach(bloco=>{
+  const idx=bloco.dataset.n;
+  const txt=bloco.querySelector('.ntxt').textContent;
+  const tit=bloco.querySelector('.ntit').textContent;
+  const botao=bloco.querySelector('.nbtn');
+  const chaveVoz = (tit.indexOf('Agenda')===0||tit.indexOf('Segredo')===0) ? 'cinza' : vozDaFala(txt,'');
+  botao.dataset.rotulo='▶ '+(VOZES[chaveVoz]?VOZES[chaveVoz].rotulo:'Narrar');
+  botao.textContent=botao.dataset.rotulo;
+  botao.dataset.estado='ocioso';
+  botao.addEventListener('click',()=>{
+    const e=botao.dataset.estado;
+    if(e==='tocando'){ pausar(botao); return; }
+    if(e==='pausado'){ retomar(botao); return; }
+    if(e==='gerando') return;
+    narrar(idx,txt,botao,idDaVoz(chaveVoz));
+  });
+});
+
+/* ---------- botão de narrar em toda fala ---------- */
+let contInline=1000;
+document.querySelectorAll('.diga, .leitura').forEach(bloco=>{
+  const idx='in'+(contInline++);
+  const txt=bloco.textContent.trim();
+  if(txt.length<8) return;
+  const painel=bloco.closest('.painel');
+  const chave=vozDaFala(txt,painel?painel.id:'');
+  const b=document.createElement('button');
+  b.className='bnarr'; b.dataset.estado='ocioso';
+  b.textContent='▶ '+(VOZES[chave]?VOZES[chave].rotulo:'Narrar');
+  b.addEventListener('click',ev=>{
+    ev.stopPropagation();
+    const e=b.dataset.estado;
+    if(e==='tocando'){ pausar(b); return; }
+    if(e==='pausado'){ retomar(b); return; }
+    if(e==='gerando') return;
+    narrar(idx,txt,b,idDaVoz(chave));
+  });
+  b.dataset.rotulo='▶ '+(VOZES[chave]?VOZES[chave].rotulo:'Narrar');
+  bloco.appendChild(b);
+});
+
+/* ---------- testar vozes do elenco ---------- */
+document.querySelectorAll('.sfx[data-voz]').forEach(bloco=>{
+  const b=bloco.querySelector('.sbtn');
+  const k=bloco.dataset.voz, txt=bloco.dataset.teste;
+  b.dataset.estado='ocioso';
+  b.addEventListener('click',()=>{
+    const e=b.dataset.estado;
+    if(e==='tocando'){ pausar(b); return; }
+    if(e==='pausado'){ retomar(b); return; }
+    if(e==='gerando') return;
+    narrar('voz-'+k,txt,b,idDaVoz(k));
+  });
+});
+
+pintarCred();
+
+/* ---------- efeitos sonoros ---------- */
+const cacheSfx={};
+const progSfx=document.getElementById('prog-sfx');
+let sfxTocando=null;
+
+async function gerarSfx(bloco){
+  const idx=bloco.dataset.s;
+  if(cacheSfx[idx]) return cacheSfx[idx];
+  const c=lerCred();
+  if(!c.key){ progSfx.textContent='sem chave — salva a chave na aba Narração primeiro'; return null; }
+  const r=await fetch('https://api.elevenlabs.io/v1/sound-generation',{
+    method:'POST',
+    headers:{'xi-api-key':c.key,'Content-Type':'application/json','Accept':'audio/mpeg'},
+    body:JSON.stringify({text:bloco.dataset.prompt,
+      duration_seconds:parseInt(bloco.dataset.dur,10)||4,
+      prompt_influence:0.5})
+  });
+  if(!r.ok){
+    let msg='erro '+r.status;
+    if(r.status===401) msg='chave inválida ou sem crédito';
+    if(r.status===429) msg='limite atingido, espera um pouco';
+    progSfx.textContent=msg;
+    return null;
+  }
+  const url=URL.createObjectURL(await r.blob());
+  cacheSfx[idx]=url;
+  bloco.classList.add('pronto');
+  bloco.querySelector('.sbtn').textContent='▶ Tocar';
+  return url;
+}
+
+function tocarSfx(url){
+  if(sfxTocando){ sfxTocando.pause(); }
+  const a=new Audio(url); sfxTocando=a; a.play();
+}
+
+document.querySelectorAll('.sfx').forEach(bloco=>{
+  const b=bloco.querySelector('.sbtn');
+  b.addEventListener('click',async()=>{
+    const idx=bloco.dataset.s;
+    if(cacheSfx[idx]){ tocarSfx(cacheSfx[idx]); return; }
+    b.disabled=true; b.textContent='…';
+    try{
+      const url=await gerarSfx(bloco);
+      if(url) tocarSfx(url); else b.textContent='▶ Gerar';
+    }catch(e){ progSfx.textContent='sem conexão com a ElevenLabs'; b.textContent='▶ Gerar'; }
+    b.disabled=false;
+  });
+});
+
+document.getElementById('gerar-todos').addEventListener('click',async()=>{
+  const blocos=[...document.querySelectorAll('.sfx')].filter(x=>!cacheSfx[x.dataset.s]);
+  if(!blocos.length){ progSfx.textContent='todos já estão prontos'; return; }
+  const btn=document.getElementById('gerar-todos');
+  btn.disabled=true;
+  for(let i=0;i<blocos.length;i++){
+    progSfx.textContent='gerando '+(i+1)+' de '+blocos.length+'…';
+    try{ await gerarSfx(blocos[i]); }
+    catch(e){ progSfx.textContent='parou no '+(i+1)+' — sem conexão'; break; }
+    await new Promise(r=>setTimeout(r,900));
+  }
+  const prontos=document.querySelectorAll('.sfx.pronto').length;
+  progSfx.textContent=prontos+' de '+document.querySelectorAll('.sfx').length+' prontos';
+  btn.disabled=false;
+});
+
+/* ---------- distância ---------- */
+const inpDist=document.getElementById('dist');
+function mostrarDist(){ inpDist.value=ESTADO.dist; }
+function setDist(v){
+  ESTADO.dist=Math.max(0,Math.min(10,v));
+  mostrarDist(); salvar();
+}
+inpDist.addEventListener('change',()=>setDist(parseInt(inpDist.value,10)||0));
+document.getElementById('dist-menos').addEventListener('click',()=>setDist(ESTADO.dist-1));
+document.getElementById('dist-mais').addEventListener('click',()=>setDist(ESTADO.dist+1));
+
+/* ---------- apagar tudo ---------- */
+document.getElementById('btn-reset').addEventListener('click',()=>{
+  if(!confirm('Apagar passos marcados, conta, iniciativa e Distância? Não dá pra desfazer.')) return;
+  ESTADO={passos:[],itens:[],comb:[],dist:8,aba:'mundo'};
+  try{ localStorage.removeItem(CHAVE); localStorage.removeItem(CHAVE_VOZ); }catch(e){}
+  location.reload();
+});
+
+/* ---------- restaurar ao abrir ---------- */
+mostrarDist();
+desenhar();
+if(ESTADO.aba){
+  const t=document.querySelector('.tab[data-alvo="'+ESTADO.aba+'"]');
+  if(t){
+    tabs.forEach(o=>o.setAttribute('aria-selected','false'));
+    t.setAttribute('aria-selected','true');
+    document.querySelectorAll('.painel').forEach(x=>x.classList.remove('ativo'));
+    document.getElementById(ESTADO.aba).classList.add('ativo');
+  }
+}
+if(!temSalvamento){ txtSalvo.textContent='sem salvamento aqui — anota no papel'; }
+else if(tinha){ txtSalvo.textContent='sessão anterior restaurada'; }
+else { txtSalvo.textContent='salvo automaticamente neste aparelho'; }
+</script>
+</body>
+</html>
